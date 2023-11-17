@@ -1,0 +1,269 @@
+﻿Orig Order,GeoType,Borough,GeoID,Name,NTA Type,Pop_10,Pop_20,Pop Change,Natural Change,Net Migration
+1,NYC,New York City,0,NYC (adjusted for citywide total population in 2010),,"8,242,624","8,804,190","561,566","612,638","-51,072"
+2,Boro,Manhattan,1,Manhattan,,"1,585,873","1,694,251","108,378","81,949","26,429"
+3,Boro,Bronx,2,Bronx,,"1,385,108","1,472,654","87,546","114,402","-26,856"
+4,Boro,Brooklyn,3,Brooklyn,,"2,504,700","2,736,074","231,374","246,479","-15,105"
+5,Boro,Queens,4,Queens,,"2,230,722","2,405,464","174,742","152,976","21,766"
+6,Boro,Staten Island,5,Staten Island,,"468,730","495,747","27,017","17,822","9,195"
+7,NTA2020,Brooklyn,BK0101,Greenpoint,0,"34,719","38,980","4,261","2,058","2,203"
+8,NTA2020,Brooklyn,BK0102,Williamsburg,0,"45,774","64,444","18,670","7,504","11,166"
+9,NTA2020,Brooklyn,BK0103,South Williamsburg,0,"42,241","47,703","5,462","16,788","-11,326"
+10,NTA2020,Brooklyn,BK0104,East Williamsburg,0,"50,349","52,998","2,649","1,893",756
+11,NTA2020,Brooklyn,BK0201,Brooklyn Heights,0,"22,887","25,092","2,205","2,360",-155
+12,NTA2020,Brooklyn,BK0202,Downtown Brooklyn-DUMBO-Boerum Hill,0,"24,605","40,968","16,363","4,179","12,184"
+13,NTA2020,Brooklyn,BK0203,Fort Greene,0,"26,399","32,938","6,539","2,228","4,311"
+14,NTA2020,Brooklyn,BK0204,Clinton Hill,0,"24,014","28,647","4,633","1,673","2,960"
+15,NTA2020,Brooklyn,BK0261,Brooklyn Navy Yard,6,7,5,-2,1,-3
+16,NTA2020,Brooklyn,BK0301,Bedford-Stuyvesant (West),0,"74,491","89,189","14,698","9,328","5,370"
+17,NTA2020,Brooklyn,BK0302,Bedford-Stuyvesant (East),0,"77,089","84,653","7,564","4,130","3,434"
+18,NTA2020,Brooklyn,BK0401,Bushwick (West),0,"53,577","58,692","5,115","4,921",194
+19,NTA2020,Brooklyn,BK0402,Bushwick (East),0,"59,043","62,049","3,006","4,607","-1,601"
+20,NTA2020,Brooklyn,BK0471,The Evergreens Cemetery,7,14,6,-8,-2,-6
+21,NTA2020,Brooklyn,BK0501,Cypress Hills,0,"41,513","43,256","1,743","4,449","-2,706"
+22,NTA2020,Brooklyn,BK0502,East New York (North),0,"39,109","42,818","3,709","3,763",-54
+23,NTA2020,Brooklyn,BK0503,East New York-New Lots,0,"47,563","53,004","5,441","3,706","1,735"
+24,NTA2020,Brooklyn,BK0504,Spring Creek-Starrett City,0,"13,676","17,038","3,362",-832,"4,194"
+25,NTA2020,Brooklyn,BK0505,East New York-City Line,0,"42,017","45,559","3,542","4,308",-766
+26,NTA2020,Brooklyn,BK0571,Highland Park-Cypress Hills Cemeteries (South),7,6,7,1,0,1
+27,NTA2020,Brooklyn,BK0601,Carroll Gardens-Cobble Hill-Gowanus-Red Hook,0,"53,756","59,166","5,410","5,826",-416
+28,NTA2020,Brooklyn,BK0602,Park Slope,0,"53,502","57,405","3,903","6,743","-2,840"
+29,NTA2020,Brooklyn,BK0701,Windsor Terrace-South Slope,0,"22,554","23,622","1,068","2,140","-1,072"
+30,NTA2020,Brooklyn,BK0702,Sunset Park (West),0,"52,189","54,473","2,284","5,204","-2,920"
+31,NTA2020,Brooklyn,BK0703,Sunset Park (Central),0,"51,806","55,606","3,800","13,258","-9,458"
+32,NTA2020,Brooklyn,BK0771,Green-Wood Cemetery,7,5,5,0,0,0
+33,NTA2020,Brooklyn,BK0801,Prospect Heights,0,"19,849","23,515","3,666","2,538","1,128"
+34,NTA2020,Brooklyn,BK0802,Crown Heights (North),0,"76,961","85,275","8,314","4,831","3,483"
+35,NTA2020,Brooklyn,BK0891,Lincoln Terrace Park,9,0,15,15,0,15
+36,NTA2020,Brooklyn,BK0901,Crown Heights (South),0,"50,405","50,590",185,"5,757","-5,572"
+37,NTA2020,Brooklyn,BK0902,Prospect Lefferts Gardens-Wingate,0,"45,808","49,513","3,705","3,274",431
+38,NTA2020,Brooklyn,BK1001,Bay Ridge,0,"80,916","86,779","5,863","5,893",-30
+39,NTA2020,Brooklyn,BK1002,Dyker Heights,0,"41,378","46,756","5,378","3,298","2,080"
+40,NTA2020,Brooklyn,BK1061,Fort Hamilton,6,764,775,11,137,-126
+41,NTA2020,Brooklyn,BK1091,Dyker Beach Park,9,0,9,9,1,8
+42,NTA2020,Brooklyn,BK1101,Bensonhurst,0,"96,036","104,934","8,898","7,644","1,254"
+43,NTA2020,Brooklyn,BK1102,Bath Beach,0,"29,931","33,070","3,139","2,233",906
+44,NTA2020,Brooklyn,BK1103,Gravesend (West),0,"55,669","60,523","4,854","3,297","1,557"
+45,NTA2020,Brooklyn,BK1201,Sunset Park (East)-Borough Park (West),0,"33,397","35,632","2,235","7,936","-5,701"
+46,NTA2020,Brooklyn,BK1202,Borough Park,0,"84,270","93,905","9,635","25,982","-16,347"
+47,NTA2020,Brooklyn,BK1203,Kensington,0,"40,472","41,758","1,286","4,463","-3,177"
+48,NTA2020,Brooklyn,BK1204,Mapleton-Midwood (West),0,"37,441","39,137","1,696","6,034","-4,338"
+49,NTA2020,Brooklyn,BK1301,Gravesend (South),0,"27,400","30,366","2,966","1,108","1,858"
+50,NTA2020,Brooklyn,BK1302,Coney Island-Sea Gate,0,"49,715","49,517",-198,"-1,132",934
+51,NTA2020,Brooklyn,BK1303,Brighton Beach,0,"31,462","33,568","2,106",339,"1,767"
+52,NTA2020,Brooklyn,BK1391,Calvert Vaux Park,9,0,0,0,-2,2
+53,NTA2020,Brooklyn,BK1401,Flatbush,0,"67,940","66,503","-1,437","6,001","-7,438"
+54,NTA2020,Brooklyn,BK1402,Flatbush (West)-Ditmas Park-Parkville,0,"42,099","43,016",917,"4,568","-3,651"
+55,NTA2020,Brooklyn,BK1403,Midwood,0,"48,988","52,891","3,903","5,524","-1,621"
+56,NTA2020,Brooklyn,BK1501,Gravesend (East)-Homecrest,0,"50,437","52,797","2,360","5,586","-3,226"
+57,NTA2020,Brooklyn,BK1502,Madison,0,"38,917","41,465","2,548","2,330",218
+58,NTA2020,Brooklyn,BK1503,Sheepshead Bay-Manhattan Beach-Gerritsen Beach,0,"64,518","69,084","4,566",971,"3,595"
+59,NTA2020,Brooklyn,BK1601,Ocean Hill,0,"31,935","37,952","6,017","2,405","3,612"
+60,NTA2020,Brooklyn,BK1602,Brownsville,0,"54,649","60,470","5,821","4,556","1,265"
+61,NTA2020,Brooklyn,BK1701,East Flatbush-Erasmus,0,"46,010","47,690","1,680","3,406","-1,726"
+62,NTA2020,Brooklyn,BK1702,East Flatbush-Farragut,0,"33,445","34,317",872,"1,827",-955
+63,NTA2020,Brooklyn,BK1703,East Flatbush-Rugby,0,"39,331","42,762","3,431","1,990","1,441"
+64,NTA2020,Brooklyn,BK1704,East Flatbush-Remsen Village,0,"37,900","39,115","1,215","2,462","-1,247"
+65,NTA2020,Brooklyn,BK1771,Holy Cross Cemetery,7,29,32,3,-1,4
+66,NTA2020,Brooklyn,BK1801,Flatlands,0,"64,762","67,087","2,325","3,996","-1,671"
+67,NTA2020,Brooklyn,BK1802,Marine Park-Mill Basin-Bergen Beach,0,"45,231","46,955","1,724","1,806",-82
+68,NTA2020,Brooklyn,BK1803,Canarsie,0,"83,693","89,932","6,239","5,200","1,039"
+69,NTA2020,Brooklyn,BK1891,Marine Park-Plumb Island,9,0,1,1,4,-3
+70,NTA2020,Brooklyn,BK1892,McGuire Fields,9,0,4,4,-1,5
+71,NTA2020,Brooklyn,BK1893,Canarsie Park & Pier,9,0,5,5,0,5
+72,NTA2020,Brooklyn,BK5591,Prospect Park,9,0,15,15,-12,27
+73,NTA2020,Brooklyn,BK5691,Barren Island-Floyd Bennett Field,9,37,21,-16,-2,-14
+74,NTA2020,Brooklyn,BK5692,Jamaica Bay (West),9,0,0,0,0,0
+75,NTA2020,Brooklyn,BK5693,Shirley Chisholm State Park,9,0,0,0,-1,1
+76,NTA2020,Bronx,BX0101,Mott Haven-Port Morris,0,"52,413","57,718","5,305","5,515",-210
+77,NTA2020,Bronx,BX0102,Melrose,0,"39,214","42,651","3,437","4,444","-1,007"
+78,NTA2020,Bronx,BX0201,Hunts Point,0,"15,458","15,131",-327,"1,673","-2,000"
+79,NTA2020,Bronx,BX0202,Longwood,0,"37,942","40,289","2,347","4,006","-1,659"
+80,NTA2020,Bronx,BX0291,North & South Brother Islands,9,0,0,0,0,0
+81,NTA2020,Bronx,BX0301,Morrisania,0,"30,870","37,607","6,737","3,789","2,948"
+82,NTA2020,Bronx,BX0302,Claremont Village-Claremont (East),0,"22,174","24,553","2,379","2,703",-324
+83,NTA2020,Bronx,BX0303,Crotona Park East,0,"26,143","30,158","4,015","2,877","1,138"
+84,NTA2020,Bronx,BX0391,Crotona Park,9,0,34,34,11,23
+85,NTA2020,Bronx,BX0401,Concourse-Concourse Village,0,"66,731","69,387","2,656","6,563","-3,907"
+86,NTA2020,Bronx,BX0402,Highbridge,0,"30,945","32,456","1,511","3,719","-2,208"
+87,NTA2020,Bronx,BX0403,Mount Eden-Claremont (West),0,"48,145","49,651","1,506","6,438","-4,932"
+88,NTA2020,Bronx,BX0491,Yankee Stadium-Macombs Dam Park,9,0,19,19,15,4
+89,NTA2020,Bronx,BX0492,Claremont Park,9,0,10,10,0,10
+90,NTA2020,Bronx,BX0501,University Heights (South)-Morris Heights,0,"52,276","54,682","2,406","5,984","-3,578"
+91,NTA2020,Bronx,BX0502,Mount Hope,0,"45,279","49,099","3,820","6,196","-2,376"
+92,NTA2020,Bronx,BX0503,Fordham Heights,0,"32,268","32,099",-169,"4,586","-4,755"
+93,NTA2020,Bronx,BX0601,West Farms,0,"18,205","20,147","1,942","1,745",197
+94,NTA2020,Bronx,BX0602,Tremont,0,"30,493","32,150","1,657","3,154","-1,497"
+95,NTA2020,Bronx,BX0603,Belmont,0,"34,650","35,825","1,175","3,544","-2,369"
+96,NTA2020,Bronx,BX0701,University Heights (North)-Fordham,0,"44,229","46,538","2,309","3,847","-1,538"
+97,NTA2020,Bronx,BX0702,Bedford Park,0,"53,330","55,521","2,191","6,064","-3,873"
+98,NTA2020,Bronx,BX0703,Norwood,0,"40,494","43,466","2,972","4,413","-1,441"
+99,NTA2020,Bronx,BX0801,Kingsbridge Heights-Van Cortlandt Village,0,"34,844","35,777",933,"2,142","-1,209"
+100,NTA2020,Bronx,BX0802,Kingsbridge-Marble Hill,0,"22,599","22,807",208,"1,454","-1,246"
+101,NTA2020,Bronx,BX0803,Riverdale-Spuyten Duyvil,0,"43,885","47,927","4,042","-2,018","6,060"
+102,NTA2020,Bronx,BX0901,Soundview-Bruckner-Bronx River,0,"69,379","74,342","4,963","7,155","-2,192"
+103,NTA2020,Bronx,BX0902,Soundview-Clason Point,0,"34,173","37,297","3,124","1,777","1,347"
+104,NTA2020,Bronx,BX0903,Castle Hill-Unionport,0,"37,252","41,420","4,168","2,970","1,198"
+105,NTA2020,Bronx,BX0904,Parkchester,0,"29,821","33,602","3,781","2,753","1,028"
+106,NTA2020,Bronx,BX0991,Soundview Park,9,4,6,2,1,1
+107,NTA2020,Bronx,BX1001,Westchester Square,0,"15,653","17,376","1,723","1,580",143
+108,NTA2020,Bronx,BX1002,Throgs Neck-Schuylerville,0,"44,164","48,116","3,952",802,"3,150"
+109,NTA2020,Bronx,BX1003,Pelham Bay-Country Club-City Island,0,"26,583","29,462","2,879",-28,"2,907"
+110,NTA2020,Bronx,BX1004,Co-op City,0,"35,475","37,369","1,894","-1,249","3,143"
+111,NTA2020,Bronx,BX1071,Hart Island,7,0,0,0,0,0
+112,NTA2020,Bronx,BX1091,Ferry Point Park-St. Raymond Cemetery,9,3,0,-3,-1,-2
+113,NTA2020,Bronx,BX1101,Pelham Parkway-Van Nest,0,"30,638","32,425","1,787","3,243","-1,456"
+114,NTA2020,Bronx,BX1102,Morris Park,0,"22,913","25,077","2,164",949,"1,215"
+115,NTA2020,Bronx,BX1103,Pelham Gardens,0,"27,228","29,402","2,174",-409,"2,583"
+116,NTA2020,Bronx,BX1104,Allerton,0,"33,998","34,623",625,"2,256","-1,631"
+117,NTA2020,Bronx,BX1161,Hutchinson Metro Center,6,894,297,-597,-61,-536
+118,NTA2020,Bronx,BX1201,Williamsbridge-Olinville,0,"55,158","61,346","6,188","4,841","1,347"
+119,NTA2020,Bronx,BX1202,Eastchester-Edenwald-Baychester,0,"49,181","51,736","2,555","2,674",-119
+120,NTA2020,Bronx,BX1203,Wakefield-Woodlawn,0,"45,513","47,657","2,144","2,889",-745
+121,NTA2020,Bronx,BX1271,Woodlawn Cemetery,7,0,2,2,-2,4
+122,NTA2020,Bronx,BX2691,Van Cortlandt Park,9,0,122,122,-21,143
+123,NTA2020,Bronx,BX2791,Bronx Park,9,"1,351",69,"-1,282",-5,"-1,277"
+124,NTA2020,Bronx,BX2891,Pelham Bay Park,9,512,28,-484,1,-485
+125,NTA2020,Manhattan,MN0101,Financial District-Battery Park City,0,"39,699","52,992","13,293","5,879","7,414"
+126,NTA2020,Manhattan,MN0102,Tribeca-Civic Center,0,"21,266","25,390","4,124","3,465",659
+127,NTA2020,Manhattan,MN0191,The Battery-Governors Island-Ellis Island-Liberty Island,9,13,8,-5,0,-5
+128,NTA2020,Manhattan,MN0201,SoHo-Little Italy-Hudson Square,0,"23,136","23,287",151,910,-759
+129,NTA2020,Manhattan,MN0202,Greenwich Village,0,"32,449","34,147","1,698","1,388",310
+130,NTA2020,Manhattan,MN0203,West Village,0,"34,431","35,011",580,"1,387",-807
+131,NTA2020,Manhattan,MN0301,Chinatown-Two Bridges,0,"44,064","42,556","-1,508","1,420","-2,928"
+132,NTA2020,Manhattan,MN0302,Lower East Side,0,"47,424","49,149","1,725",525,"1,200"
+133,NTA2020,Manhattan,MN0303,East Village,0,"71,789","71,436",-353,561,-914
+134,NTA2020,Manhattan,MN0401,Chelsea-Hudson Yards,0,"55,372","69,741","14,369","2,245","12,124"
+135,NTA2020,Manhattan,MN0402,Hell's Kitchen,0,"45,884","59,524","13,640","1,739","11,901"
+136,NTA2020,Manhattan,MN0501,Midtown South-Flatiron-Union Square,0,"25,530","33,214","7,684","2,356","5,328"
+137,NTA2020,Manhattan,MN0502,Midtown-Times Square,0,"21,140","25,575","4,435",840,"3,595"
+138,NTA2020,Manhattan,MN0601,Stuyvesant Town-Peter Cooper Village,0,"21,049","22,512","1,463",532,931
+139,NTA2020,Manhattan,MN0602,Gramercy,0,"27,988","28,628",640,797,-157
+140,NTA2020,Manhattan,MN0603,Murray Hill-Kips Bay,0,"57,124","63,520","6,396","2,498","3,898"
+141,NTA2020,Manhattan,MN0604,East Midtown-Turtle Bay,0,"41,587","45,765","4,178","1,419","2,759"
+142,NTA2020,Manhattan,MN0661,United Nations,6,0,0,0,36,-36
+143,NTA2020,Manhattan,MN0701,Upper West Side-Lincoln Square,0,"61,489","70,697","9,208","5,825","3,383"
+144,NTA2020,Manhattan,MN0702,Upper West Side (Central),0,"98,860","101,767","2,907","4,474","-1,567"
+145,NTA2020,Manhattan,MN0703,Upper West Side-Manhattan Valley,0,"50,724","51,751","1,027","1,348",-321
+146,NTA2020,Manhattan,MN0801,Upper East Side-Lenox Hill-Roosevelt Island,0,"80,771","85,527","4,756","6,378","-1,622"
+147,NTA2020,Manhattan,MN0802,Upper East Side-Carnegie Hill,0,"61,207","62,410","1,203","1,116",87
+148,NTA2020,Manhattan,MN0803,Upper East Side-Yorkville,0,"77,942","84,046","6,104","4,980","1,124"
+149,NTA2020,Manhattan,MN0901,Morningside Heights,0,"38,723","38,865",142,835,-693
+150,NTA2020,Manhattan,MN0902,Manhattanville-West Harlem,0,"22,950","22,183",-767,"1,166","-1,933"
+151,NTA2020,Manhattan,MN0903,Hamilton Heights-Sugar Hill,0,"48,520","49,410",890,"2,706","-1,816"
+152,NTA2020,Manhattan,MN1001,Harlem (South),0,"43,383","47,113","3,730","3,198",532
+153,NTA2020,Manhattan,MN1002,Harlem (North),0,"72,340","83,327","10,987","3,690","7,297"
+154,NTA2020,Manhattan,MN1101,East Harlem (South),0,"57,902","59,814","1,912","2,541",-629
+155,NTA2020,Manhattan,MN1102,East Harlem (North),0,"60,961","64,655","3,694","3,066",628
+156,NTA2020,Manhattan,MN1191,Randall's Island,9,"1,648","1,302",-346,-83,-263
+157,NTA2020,Manhattan,MN1201,Washington Heights (South),0,"77,417","72,037","-5,380","4,550","-9,930"
+158,NTA2020,Manhattan,MN1202,Washington Heights (North),0,"74,157","71,842","-2,315","4,600","-6,915"
+159,NTA2020,Manhattan,MN1203,Inwood,0,"38,283","36,299","-1,984","3,006","-4,990"
+160,NTA2020,Manhattan,MN1291,Highbridge Park,9,2,12,10,0,10
+161,NTA2020,Manhattan,MN1292,Inwood Hill Park,9,161,16,-145,2,-147
+162,NTA2020,Manhattan,MN6491,Central Park,9,25,129,104,-24,128
+163,NTA2020,Queens,QN0101,Astoria (North)-Ditmars-Steinway,0,"47,534","50,225","2,691","2,597",94
+164,NTA2020,Queens,QN0102,Old Astoria-Hallets Point,0,"16,487","18,927","2,440","1,470",970
+165,NTA2020,Queens,QN0103,Astoria (Central),0,"49,873","52,220","2,347","2,788",-441
+166,NTA2020,Queens,QN0104,Astoria (East)-Woodside (North),0,"39,120","38,673",-447,"2,266","-2,713"
+167,NTA2020,Queens,QN0105,Queensbridge-Ravenswood-Dutch Kills,0,"26,989","32,954","5,965","1,729","4,236"
+168,NTA2020,Bronx,QN0151,Rikers Island,5,"11,091","3,772","-7,319",1,"-7,320"
+169,NTA2020,Queens,QN0161,Sunnyside Yards (North),6,8,27,19,0,19
+170,NTA2020,Queens,QN0171,St. Michael's Cemetery,7,0,5,5,0,5
+171,NTA2020,Queens,QN0191,Astoria Park,9,3,0,-3,1,-4
+172,NTA2020,Queens,QN0201,Long Island City-Hunters Point,0,"10,815","32,216","21,401","3,890","17,511"
+173,NTA2020,Queens,QN0202,Sunnyside,0,"52,441","52,278",-163,"3,815","-3,978"
+174,NTA2020,Queens,QN0203,Woodside,0,"49,721","53,188","3,467","3,954",-487
+175,NTA2020,Queens,QN0261,Sunnyside Yards (South),6,0,36,36,1,35
+176,NTA2020,Queens,QN0271,Calvary & Mount Zion Cemeteries,7,27,0,-27,-1,-26
+177,NTA2020,Queens,QN0301,Jackson Heights,0,"100,866","101,848",982,"7,970","-6,988"
+178,NTA2020,Queens,QN0302,East Elmhurst,0,"30,436","33,573","3,137","2,958",179
+179,NTA2020,Queens,QN0303,North Corona,0,"40,112","43,434","3,322","7,193","-3,871"
+180,NTA2020,Queens,QN0401,Elmhurst,0,"103,494","107,864","4,370","10,465","-6,095"
+181,NTA2020,Queens,QN0402,Corona,0,"69,583","73,822","4,239","8,556","-4,317"
+182,NTA2020,Queens,QN0501,Maspeth,0,"39,160","43,257","4,097","1,993","2,104"
+183,NTA2020,Queens,QN0502,Ridgewood,0,"66,648","66,402",-246,"6,232","-6,478"
+184,NTA2020,Queens,QN0503,Glendale,0,"32,496","35,135","2,639","1,699",940
+185,NTA2020,Queens,QN0504,Middle Village,0,"31,917","34,474","2,557",256,"2,301"
+186,NTA2020,Queens,QN0571,Mount Olivet & All Faiths Cemeteries,7,25,3,-22,3,-25
+187,NTA2020,Queens,QN0572,Middle Village Cemetery,7,19,0,-19,0,-19
+188,NTA2020,Queens,QN0573,St. John Cemetery,7,0,3,3,1,2
+189,NTA2020,Queens,QN0574,Highland Park-Cypress Hills Cemeteries (North),7,73,20,-53,0,-53
+190,NTA2020,Queens,QN0601,Rego Park,0,"28,260","30,741","2,481","1,741",740
+191,NTA2020,Queens,QN0602,Forest Hills,0,"83,728","88,965","5,237","4,986",251
+192,NTA2020,Queens,QN0701,College Point,0,"28,246","33,625","5,379","1,893","3,486"
+193,NTA2020,Queens,QN0702,Whitestone-Beechhurst,0,"26,802","28,408","1,606",326,"1,280"
+194,NTA2020,Queens,QN0703,Bay Terrace-Clearview,0,"21,751","23,287","1,536",-411,"1,947"
+195,NTA2020,Queens,QN0704,Murray Hill-Broadway Flushing,0,"55,951","57,387","1,436","1,815",-379
+196,NTA2020,Queens,QN0705,East Flushing,0,"32,300","34,704","2,404","2,330",74
+197,NTA2020,Queens,QN0706,Queensboro Hill,0,"20,798","23,638","2,840","2,384",456
+198,NTA2020,Queens,QN0707,Flushing-Willets Point,0,"62,478","69,879","7,401","5,058","2,343"
+199,NTA2020,Queens,QN0761,Fort Totten,6,0,0,0,0,0
+200,NTA2020,Queens,QN0791,Kissena Park,9,0,2,2,1,1
+201,NTA2020,Queens,QN0801,Kew Gardens Hills,0,"34,278","36,009","1,731","5,231","-3,500"
+202,NTA2020,Queens,QN0802,Pomonok-Electchester-Hillcrest,0,"33,704","35,669","1,965","1,778",187
+203,NTA2020,Queens,QN0803,Fresh Meadows-Utopia,0,"21,345","23,434","2,089","1,103",986
+204,NTA2020,Queens,QN0804,Jamaica Estates-Holliswood,0,"22,170","23,576","1,406",908,498
+205,NTA2020,Queens,QN0805,Jamaica Hills-Briarwood,0,"36,500","39,292","2,792","2,892",-100
+206,NTA2020,Queens,QN0871,Mount Hebron & Cedar Grove Cemeteries,7,1,1,0,0,0
+207,NTA2020,Queens,QN0891,Cunningham Park,9,73,5,-68,1,-69
+208,NTA2020,Queens,QN0901,Kew Gardens,0,"23,278","24,371","1,093","1,870",-777
+209,NTA2020,Queens,QN0902,Richmond Hill,0,"32,951","34,100","1,149","3,100","-1,951"
+210,NTA2020,Queens,QN0903,South Richmond Hill,0,"24,165","24,141",-24,"2,014","-2,038"
+211,NTA2020,Queens,QN0904,Ozone Park (North),0,"24,158","27,312","3,154","2,622",532
+212,NTA2020,Queens,QN0905,Woodhaven,0,"38,382","41,948","3,566","3,161",405
+213,NTA2020,Queens,QN1001,South Ozone Park,0,"75,878","79,540","3,662","5,280","-1,618"
+214,NTA2020,Queens,QN1002,Ozone Park,0,"21,376","23,518","2,142","1,564",578
+215,NTA2020,Queens,QN1003,Howard Beach-Lindenwood,0,"26,143","27,320","1,177",-324,"1,501"
+216,NTA2020,Queens,QN1091,Spring Creek Park,9,5,0,-5,3,-8
+217,NTA2020,Queens,QN1101,Auburndale,0,"33,805","36,182","2,377",608,"1,769"
+218,NTA2020,Queens,QN1102,Bayside,0,"34,742","35,588",846,963,-117
+219,NTA2020,Queens,QN1103,Douglaston-Little Neck,0,"24,739","25,262",523,-109,632
+220,NTA2020,Queens,QN1104,Oakland Gardens-Hollis Hills,0,"23,494","25,249","1,755",463,"1,292"
+221,NTA2020,Queens,QN1191,Alley Pond Park,9,72,85,13,-1,14
+222,NTA2020,Queens,QN1201,Jamaica,0,"53,883","60,993","7,110","6,437",673
+223,NTA2020,Queens,QN1202,South Jamaica,0,"36,938","44,401","7,463","3,209","4,254"
+224,NTA2020,Queens,QN1203,Baisley Park,0,"37,699","43,090","5,391","2,643","2,748"
+225,NTA2020,Queens,QN1204,Springfield Gardens (North)-Rochdale Village,0,"28,537","32,883","4,346","1,203","3,143"
+226,NTA2020,Queens,QN1205,St. Albans,0,"47,831","51,816","3,985","1,635","2,350"
+227,NTA2020,Queens,QN1206,Hollis,0,"22,349","24,576","2,227","1,400",827
+228,NTA2020,Queens,QN1301,Glen Oaks-Floral Park-New Hyde Park,0,"22,571","23,364",793,-759,"1,552"
+229,NTA2020,Queens,QN1302,Bellerose,0,"25,287","26,566","1,279","1,040",239
+230,NTA2020,Queens,QN1303,Queens Village,0,"52,734","54,345","1,611","2,909","-1,298"
+231,NTA2020,Queens,QN1304,Cambria Heights,0,"18,677","19,081",404,356,48
+232,NTA2020,Queens,QN1305,Laurelton,0,"24,453","26,088","1,635",794,841
+233,NTA2020,Queens,QN1306,Springfield Gardens (South)-Brookville,0,"20,170","23,103","2,933","1,611","1,322"
+234,NTA2020,Queens,QN1307,Rosedale,0,"25,025","27,101","2,076","1,834",242
+235,NTA2020,Queens,QN1371,Montefiore Cemetery,7,1,0,-1,0,-1
+236,NTA2020,Queens,QN1401,Far Rockaway-Bayswater,0,"53,861","58,648","4,787","4,687",100
+237,NTA2020,Queens,QN1402,Rockaway Beach-Arverne-Edgemere,0,"36,462","41,367","4,905","1,788","3,117"
+238,NTA2020,Queens,QN1403,Breezy Point-Belle Harbor-Rockaway Park-Broad Channel,0,"24,638","24,134",-504,-857,353
+239,NTA2020,Queens,QN1491,Rockaway Community Park,9,0,12,12,-1,13
+240,NTA2020,Queens,QN8081,LaGuardia Airport,8,0,0,0,-1,1
+241,NTA2020,Queens,QN8191,Flushing Meadows-Corona Park,9,56,44,-12,-40,28
+242,NTA2020,Queens,QN8291,Forest Park,9,113,4,-109,4,-113
+243,NTA2020,Queens,QN8381,John F. Kennedy International Airport,8,0,2,2,1,1
+244,NTA2020,Queens,QN8491,Jamaica Bay (East),9,0,0,0,4,-4
+245,NTA2020,Queens,QN8492,Jacob Riis Park-Fort Tilden-Breezy Point Tip,9,17,24,7,-7,14
+246,NTA2020,Staten Island,SI0101,St. George-New Brighton,0,"18,774","20,549","1,775","1,077",698
+247,NTA2020,Staten Island,SI0102,Tompkinsville-Stapleton-Clifton-Fox Hills,0,"16,192","19,027","2,835","1,150","1,685"
+248,NTA2020,Staten Island,SI0103,Rosebank-Shore Acres-Park Hill,0,"23,259","25,510","2,251","1,875",376
+249,NTA2020,Staten Island,SI0104,West New Brighton-Silver Lake-Grymes Hill,0,"35,484","37,010","1,526","1,663",-137
+250,NTA2020,Staten Island,SI0105,Westerleigh-Castleton Corners,0,"29,816","31,458","1,642",676,966
+251,NTA2020,Staten Island,SI0106,Port Richmond,0,"20,754","22,609","1,855","1,906",-51
+252,NTA2020,Staten Island,SI0107,Mariner's Harbor-Arlington-Graniteville,0,"31,474","33,492","2,018","2,516",-498
+253,NTA2020,Staten Island,SI0191,Snug Harbor,9,3,8,5,0,5
+254,NTA2020,Staten Island,SI0201,Grasmere-Arrochar-South Beach-Dongan Hills,0,"34,425","36,259","1,834",718,"1,116"
+255,NTA2020,Staten Island,SI0202,New Dorp-Midland Beach,0,"27,623","29,083","1,460",874,586
+256,NTA2020,Staten Island,SI0203,Todt Hill-Emerson Hill-Lighthouse Hill-Manor Heights,0,"30,851","32,822","1,971",-273,"2,244"
+257,NTA2020,Staten Island,SI0204,New Springville-Willowbrook-Bulls Head-Travis,0,"39,310","42,871","3,561","1,571","1,990"
+258,NTA2020,Staten Island,SI0291,Freshkills Park (North),9,53,15,-38,0,-38
+259,NTA2020,Staten Island,SI0301,Oakwood-Richmondtown,0,"22,049","22,388",339,-30,369
+260,NTA2020,Staten Island,SI0302,Great Kills-Eltingville,0,"52,868","54,699","1,831",674,"1,157"
+261,NTA2020,Staten Island,SI0303,Arden Heights-Rossville,0,"29,916","30,683",767,"1,510",-743
+262,NTA2020,Staten Island,SI0304,Annadale-Huguenot-Prince's Bay-Woodrow,0,"38,160","40,534","2,374","1,375",999
+263,NTA2020,Staten Island,SI0305,Tottenville-Charleston,0,"16,860","16,089",-771,412,"-1,183"
+264,NTA2020,Staten Island,SI0391,Freshkills Park (South),9,97,95,-2,9,-11
+265,NTA2020,Staten Island,SI9561,Fort Wadsworth,6,731,495,-236,120,-356
+266,NTA2020,Staten Island,SI9591,Hoffman & Swinburne Islands,9,0,0,0,0,0
+267,NTA2020,Staten Island,SI9592,Miller Field,9,31,46,15,-1,16
+268,NTA2020,Staten Island,SI9593,Great Kills Park,9,0,5,5,0,5
