@@ -2,9 +2,6 @@
 
 ### File Structure
 ```
-+-- src
-|   +-- drug_crime_preprocess.py
-|   +-- census_preprocess.py
 +-- data
 |   +-- Drug_Crime_20231111.csv
 |   +-- 2020_Census
@@ -13,6 +10,7 @@
 |   |   +-- dcp-comps-of-chg-StoryMap-data-032023-Total-Population-Hispanic.csv
 |   |   +-- dcp-comps-of-chg-StoryMap-data-032023-Total-Population-White.csv
 |   |   +-- dcp-comps-of-chg-StoryMap-data-032023-Total-Population.csv
++-- utils.py
 +-- NYC_Analysis.py
 ```
 
