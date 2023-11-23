@@ -67,4 +67,30 @@ def isolate_date_part(data, columns:list, date_part:str):
         data[col] = data[col].str.split('/').str[part_index[date_part]]
         
     return data
+
+def preprocess_datasets(datasets):
+    # Clean NaN of relevant columns
+    datasets['Drug_Crime']['PARKS_NM'] = replace_column_nan(datasets["Drug_Crime"]['PARKS_NM'], oldnan='(null)').fillna('Not at a park')
+    
+    # Rename columns
+    new_columns = {'CMPLNT_NUM': 'ID', 'CMPLNT_FR_DT': 'Year', 'CMPLNT_FR_TM': 'Time', 'CMPLNT_TO_DT': 'EndYear', 
+                        'RPT_DT': 'Reported on:', 'ADDR_PCT_CD': 'Precinct', 'KY_CD': 'Offense_Code',
+                        'OFNS_DESC': 'Description', 'CRM_ATPT_CPTD_CD': 'Completed?'}
+    datasets['Drug_Crime'].rename(columns=new_columns, inplace=True)
+
+    # Rearrange Columns
+    datasets['Drug_Crime'].drop(columns = ['CMPLNT_TO_TM', 'Latitude', 'Longitude'], inplace = True)
+    datasets['Drug_Crime'].set_index('ID', inplace = True)
+    
+    # Adjust Column Values
+    isolate_date_part(datasets['Drug_Crime'], ['Year', 'Reported on:', 'EndYear'], 'y')
+    datasets['Drug_Crime']['Completed?'] = datasets['Drug_Crime']['Completed?'].map({'COMPLETED': True, 'ATTEMPTED': False})
+    
+    # Drop Redundant Columns NOTE: Compute via Pearson's and Visualize Correlation by Scatter plot or some other method.
+    datasets['Drug_Crime'].drop(columns = ['Offense_Code', 'LAW_CAT_CD'], inplace = True)
+
+    # TODO: Isolate Drug Crime Possession Type
+    pd_desc_mapping = {'CONTROLLED SUBSTANCE,POSSESS.', 'CONTROLLED SUBSTANCE, POSSESSI' }
+    
+    return datasets
         
