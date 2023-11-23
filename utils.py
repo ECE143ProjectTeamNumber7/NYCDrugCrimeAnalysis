@@ -72,7 +72,7 @@ def convert_data(data, conv_table = {}):
 
     Parameters:
         data (pd.DataFrame):    Dataframe of which the columns shall be modified.
-        conv_table (dict):      Optional. Dictionary off column names as the key and datatype as the value
+        conv_table (dict):      Optional. Dictionary of column names as the key and datatype as the value
     
     Returns:
         Original pandas dataframe to be used for reference or discarded.
