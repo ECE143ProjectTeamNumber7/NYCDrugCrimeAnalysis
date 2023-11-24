@@ -44,22 +44,21 @@ def replace_column_nan(column, oldnan, newnan = np.nan):
     return new_column
     
 
-def convert_data(data, conv_table = {}):
+def convert_col_values(dataset, columns:list = [], conv_maps = [{}]):
     '''
-    Converts the data type of the respective column in the dataframe to the corresponding datatype, inplace. Original dataframe will be returned.
-    Useful for when a column of the pandas dataframe is a `str` object, but should or can be converted to an actual Python datatype.
-    e.g. Converting 08/27/2001 `str` object to `DateTime` object.
-
-    Parameters:
-        data (pd.DataFrame):    Dataframe of which the columns shall be modified.
-        conv_table (dict):      Optional. Dictionary off column names as the key and datatype as the value
+    Renames data values in a column via a conversion table. Values not listed in the table are not converted and left as is.
     
-    Returns:
-        Original pandas dataframe to be used for reference or discarded.
     '''
-    pass
+    for col, conv_map in zip(columns, conv_maps):
+        dataset[col] = dataset[col].map(conv_map, na_action="ignore")
+    
+    # datasets['Drug_Crime']['Completed?'] = datasets['Drug_Crime']['Completed?'].map({'COMPLETED': True, 'ATTEMPTED': False})
+    
+    return dataset
 
 def isolate_date_part(data, columns:list, date_part:str):
+    '''
+    '''
     part_index = {'m': 0, 'd': 1, 'y': 2}
     assert date_part in part_index.keys()
     
@@ -69,28 +68,57 @@ def isolate_date_part(data, columns:list, date_part:str):
     return data
 
 def preprocess_datasets(datasets):
+    '''
+    '''
     # Clean NaN of relevant columns
     datasets['Drug_Crime']['PARKS_NM'] = replace_column_nan(datasets["Drug_Crime"]['PARKS_NM'], oldnan='(null)').fillna('Not at a park')
     
     # Rename columns
-    new_columns = {'CMPLNT_NUM': 'ID', 'CMPLNT_FR_DT': 'Year', 'CMPLNT_FR_TM': 'Time', 'CMPLNT_TO_DT': 'EndYear', 
-                        'RPT_DT': 'Reported on:', 'ADDR_PCT_CD': 'Precinct', 'KY_CD': 'Offense_Code',
-                        'OFNS_DESC': 'Description', 'CRM_ATPT_CPTD_CD': 'Completed?'}
+    new_columns = {'CMPLNT_NUM': 'ID', 
+                   'CMPLNT_FR_DT': 'Year', 
+                   'CMPLNT_FR_TM': 'Time', 
+                   'CMPLNT_TO_DT': 'EndYear', 
+                   'RPT_DT': 'Reported on:', 
+                   'ADDR_PCT_CD': 'Precinct', 
+                   'OFNS_DESC': 'Description', 
+                   'CRM_ATPT_CPTD_CD': 'Completed?', 
+                   'LAW_CAT_CD': 'Charge_Type',
+                   'PD_CD': 'NYC Penal Code',
+                   'PD_DESC': 'Crime'}
     datasets['Drug_Crime'].rename(columns=new_columns, inplace=True)
 
     # Rearrange Columns
-    datasets['Drug_Crime'].drop(columns = ['CMPLNT_TO_TM', 'Latitude', 'Longitude'], inplace = True)
+    datasets['Drug_Crime'].drop(columns = ['CMPLNT_TO_TM', 'Latitude', 'Longitude', 'KY_CDs'], inplace = True)
     datasets['Drug_Crime'].set_index('ID', inplace = True)
     
-    # Adjust Column Values
+    # Adjust Column Values To Valid Readable Data
     isolate_date_part(datasets['Drug_Crime'], ['Year', 'Reported on:', 'EndYear'], 'y')
-    datasets['Drug_Crime']['Completed?'] = datasets['Drug_Crime']['Completed?'].map({'COMPLETED': True, 'ATTEMPTED': False})
-    
-    # Drop Redundant Columns NOTE: Compute via Pearson's and Visualize Correlation by Scatter plot or some other method.
-    datasets['Drug_Crime'].drop(columns = ['Offense_Code', 'LAW_CAT_CD'], inplace = True)
-
-    # TODO: Isolate Drug Crime Possession Type
-    pd_desc_mapping = {'CONTROLLED SUBSTANCE,POSSESS.', 'CONTROLLED SUBSTANCE, POSSESSI' }
+    crimes = {'CONTROLLED SUBSTANCE,INTENT TO': 'POSSESS. OF CS W/ INTENT TO SELL',
+              'CONTROLLED SUBSTANCE, INTENT T': 'POSSESS. OF CS W/ INTENT TO SELL',
+              'CONTROLLED SUBSTANCE, POSSESSI': '7 DEG POSSESS. OF CS',
+              'CONTROLLED SUBSTANCE,POSSESS.': '3, 4, 5 DEG POSSESS. OF CS',
+              'CONTROLLED SUBSTANCE,POSSESS.-': '1 & 2 DEG POSSESS. OF CS',
+              'CONTROLLED SUBSTANCE, SALE 5': '5 DEG SALE OF CS',
+              'CONTROLLED SUBSTANCE, SALE 4': '4 DEG SALE OF CS',
+              'CONTROLLED SUBSTANCE,SALE 3': '3 DEG SALE OF CS',
+              'CONTROLLED SUBSTANCE,SALE 2': '2 DEG SALE OF CS',
+              'CONTROLLED SUBSTANCE,SALE 1': '1 DEG SALE OF CS',
+              'MARIJUANA, POSSESSION 4 & 5': '4 & 5 DEG POSSESS. OF MARIJUANA',
+              'MARIJUANA, SALE 4 & 5': '4 & 5 DEG SALE OF MARIJUANA',
+              'MARIJUANA, POSSESSION 1, 2 & 3': '1, 2, 3 DEG POSSESS. OF MARIJUANA',
+              'MARIJUANA, SALE 1, 2 & 3': '1, 2, 3 DEG SALE OF MARIJUANA',
+              'DRUG PARAPHERNALIA,   POSSESSE': 'POSSESS. OF PARAPHERNALIA',
+              'POSSESSION HYPODERMIC INSTRUME': 'POSSESS. OF HYPODERMIC INSTRUMENTS',
+              'SALE SCHOOL GROUNDS 4': 'SALE SCHOOL GROUNDS',
+              'SALE SCHOOL GROUNDS': 'SALE SCHOOL GROUNDS',
+              'SALES OF PRESCRIPTION': 'SALES OF PRESCRIPTION',
+              'UNDER THE INFLUENCE OF DRUGS': 'UNDER THE INFLUENCE OF DRUGS',
+              'DRUG, INJECTION OF': 'INJECTION OF NARCOTICS',
+              'LOITERING 1ST DEGREE FOR DRUG': '1 DEG LOITERING FOR DRUGS',
+              'USE CHILD TO COMMIT CONT SUB OFF': 'USE CHILD TO COMMIT CS CRIMES',
+              'POSS METH MANUFACT MATERIAL': 'POSSESS. OF METH MATERIALS'}
+    datasets['Drug_Crime'] = convert_col_values(datasets['Drug_Crime'], columns=['Completed?', 'Crime'],
+                                                conv_maps=[{'COMPLETED': True, 'ATTEMPTED': False}, crimes])
     
     return datasets
         
