@@ -51,33 +51,22 @@ def convert_col_values(dataset, columns:list = [], conv_maps = [{}]):
     '''
     for col, conv_map in zip(columns, conv_maps):
         dataset[col] = dataset[col].map(conv_map, na_action="ignore")
-    
-    # datasets['Drug_Crime']['Completed?'] = datasets['Drug_Crime']['Completed?'].map({'COMPLETED': True, 'ATTEMPTED': False})
-    
+        
     return dataset
 
-def isolate_date_part(data, columns:list, date_part:str):
+def split_and_isolate(column, delim:str, part_index:int = None):
     '''
     '''
-    part_index = {'m': 0, 'd': 1, 'y': 2}
-    assert date_part in part_index.keys()
+    data_split = column.str.split(delim)
+    return data_split if part_index is None else data_split.str[part_index]
     
-    for col in columns:
-        data[col] = data[col].str.split('/').str[part_index[date_part]]
-        
-    return data
-
 def preprocess_datasets(datasets):
     '''
     '''
-    # Clean NaN of relevant columns
-    datasets['Drug_Crime']['PARKS_NM'] = replace_column_nan(datasets["Drug_Crime"]['PARKS_NM'], oldnan='(null)').fillna('Not at a park')
-    
     # Rename columns
     new_columns = {'CMPLNT_NUM': 'ID', 
                    'CMPLNT_FR_DT': 'Year', 
                    'CMPLNT_FR_TM': 'Time', 
-                   'CMPLNT_TO_DT': 'EndYear', 
                    'RPT_DT': 'Reported on:', 
                    'ADDR_PCT_CD': 'Precinct', 
                    'OFNS_DESC': 'Description', 
@@ -88,35 +77,49 @@ def preprocess_datasets(datasets):
     datasets['Drug_Crime'].rename(columns=new_columns, inplace=True)
 
     # Rearrange Columns
-    datasets['Drug_Crime'].drop(columns = ['CMPLNT_TO_TM', 'Latitude', 'Longitude', 'KY_CDs'], inplace = True)
+    datasets['Drug_Crime'].drop(columns = ['CMPLNT_TO_TM', 'CMPLNT_TO_DT', 'Latitude', 'Longitude', 'KY_CD'], inplace = True)
     datasets['Drug_Crime'].set_index('ID', inplace = True)
     
+    # Rename and drop NaN of relevant columns
+    clean_cols = {'PARKS_NM': 'Not at a park', 
+                  'LOC_OF_OCCUR_DESC': 'Location not known',
+                  'HADEVELOPT': 'Not at a HA dev',
+                  'BORO_NM': 'Borough not known',
+                  'PREM_TYP_DESC': 'Premise not known'}
+    for col in clean_cols:
+        datasets['Drug_Crime'][col] = replace_column_nan(datasets["Drug_Crime"][col], oldnan='(null)').fillna(clean_cols[col])
+
+    datasets['Drug_Crime'] = datasets['Drug_Crime'].drop(datasets['Drug_Crime'][datasets['Drug_Crime']['Time'] == '(null)'].index)    
+    datasets['Drug_Crime'].dropna(inplace=True)
+
     # Adjust Column Values To Valid Readable Data
-    isolate_date_part(datasets['Drug_Crime'], ['Year', 'Reported on:', 'EndYear'], 'y')
-    crimes = {'CONTROLLED SUBSTANCE,INTENT TO': 'POSSESS. OF CS W/ INTENT TO SELL',
-              'CONTROLLED SUBSTANCE, INTENT T': 'POSSESS. OF CS W/ INTENT TO SELL',
-              'CONTROLLED SUBSTANCE, POSSESSI': '7 DEG POSSESS. OF CS',
-              'CONTROLLED SUBSTANCE,POSSESS.': '3, 4, 5 DEG POSSESS. OF CS',
-              'CONTROLLED SUBSTANCE,POSSESS.-': '1 & 2 DEG POSSESS. OF CS',
-              'CONTROLLED SUBSTANCE, SALE 5': '5 DEG SALE OF CS',
-              'CONTROLLED SUBSTANCE, SALE 4': '4 DEG SALE OF CS',
-              'CONTROLLED SUBSTANCE,SALE 3': '3 DEG SALE OF CS',
-              'CONTROLLED SUBSTANCE,SALE 2': '2 DEG SALE OF CS',
-              'CONTROLLED SUBSTANCE,SALE 1': '1 DEG SALE OF CS',
-              'MARIJUANA, POSSESSION 4 & 5': '4 & 5 DEG POSSESS. OF MARIJUANA',
+    for col, delim, part in [('Year', '/', -1), ('Reported on:', '/', -1), ('Time', ':', 0)]:
+        datasets['Drug_Crime'][col] = split_and_isolate(datasets['Drug_Crime'][col], delim, part)
+
+    crimes = {'CONTROLLED SUBSTANCE,INTENT TO': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
+              'CONTROLLED SUBSTANCE, INTENT T': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
+              'CONTROLLED SUBSTANCE, POSSESSI': '7 DEG POSS. OF CONTROLLED',
+              'CONTROLLED SUBSTANCE,POSSESS.': '3, 4, 5 DEG POSS. OF CONTROLLED SUBSTANCE',
+              'CONTROLLED SUBSTANCE,POSSESS.-': '1 & 2 DEG POSS. OF CONTROLLED SUBSTANCE',
+              'CONTROLLED SUBSTANCE, SALE 5': '5 DEG SALE OF CONTROLLED SUBSTANCE',
+              'CONTROLLED SUBSTANCE, SALE 4': '4 DEG SALE OF CONTROLLED SUBSTANCE',
+              'CONTROLLED SUBSTANCE,SALE 3': '3 DEG SALE OF CONTROLLED SUBSTANCE',
+              'CONTROLLED SUBSTANCE,SALE 2': '2 DEG SALE OF CONTROLLED SUBSTANCE',
+              'CONTROLLED SUBSTANCE,SALE 1': '1 DEG SALE OF CONTROLLED SUBSTANCE',
+              'MARIJUANA, POSSESSION 4 & 5': '4 & 5 DEG POSS. OF MARIJUANA',
               'MARIJUANA, SALE 4 & 5': '4 & 5 DEG SALE OF MARIJUANA',
-              'MARIJUANA, POSSESSION 1, 2 & 3': '1, 2, 3 DEG POSSESS. OF MARIJUANA',
+              'MARIJUANA, POSSESSION 1, 2 & 3': '1, 2, 3 DEG POSS. OF MARIJUANA',
               'MARIJUANA, SALE 1, 2 & 3': '1, 2, 3 DEG SALE OF MARIJUANA',
-              'DRUG PARAPHERNALIA,   POSSESSE': 'POSSESS. OF PARAPHERNALIA',
-              'POSSESSION HYPODERMIC INSTRUME': 'POSSESS. OF HYPODERMIC INSTRUMENTS',
+              'DRUG PARAPHERNALIA,   POSSESSE': 'POSS. OF PARAPHERNALIA',
+              'POSSESSION HYPODERMIC INSTRUME': 'POSS. OF HYPODERMIC INSTRUMENTS',
               'SALE SCHOOL GROUNDS 4': 'SALE SCHOOL GROUNDS',
               'SALE SCHOOL GROUNDS': 'SALE SCHOOL GROUNDS',
               'SALES OF PRESCRIPTION': 'SALES OF PRESCRIPTION',
               'UNDER THE INFLUENCE OF DRUGS': 'UNDER THE INFLUENCE OF DRUGS',
-              'DRUG, INJECTION OF': 'INJECTION OF NARCOTICS',
+              'DRUG, INJECTION OF': 'INJECTION OF NARCOTICONTROLLED SUBSTANCE',
               'LOITERING 1ST DEGREE FOR DRUG': '1 DEG LOITERING FOR DRUGS',
-              'USE CHILD TO COMMIT CONT SUB OFF': 'USE CHILD TO COMMIT CS CRIMES',
-              'POSS METH MANUFACT MATERIAL': 'POSSESS. OF METH MATERIALS'}
+              'USE CHILD TO COMMIT CONT SUB OFF': 'USE CHILD TO COMMIT CONTROLLED SUBSTANCE CRIMES',
+              'POSS METH MANUFACT MATERIAL': 'POSS. OF METH MATERIALS'}
     datasets['Drug_Crime'] = convert_col_values(datasets['Drug_Crime'], columns=['Completed?', 'Crime'],
                                                 conv_maps=[{'COMPLETED': True, 'ATTEMPTED': False}, crimes])
     
