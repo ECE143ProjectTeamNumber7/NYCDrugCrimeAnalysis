@@ -71,12 +71,12 @@ def preprocess_datasets(datasets):
                    'ADDR_PCT_CD': 'Precinct', 
                    'OFNS_DESC': 'Description', 
                    'CRM_ATPT_CPTD_CD': 'Completed?', 
-                   'LAW_CAT_CD': 'Charge_Type',
+                   'LAW_CAT_CD': 'Crime Category',
                    'PD_CD': 'NYC Penal Code',
                    'PD_DESC': 'Crime'}
     datasets['Drug_Crime'].rename(columns=new_columns, inplace=True)
 
-    # Rearrange Columns
+    # Rearrange columns
     datasets['Drug_Crime'].drop(columns = ['CMPLNT_TO_TM', 'CMPLNT_TO_DT', 'Latitude', 'Longitude', 'KY_CD'], inplace = True)
     datasets['Drug_Crime'].set_index('ID', inplace = True)
     
@@ -92,10 +92,7 @@ def preprocess_datasets(datasets):
     datasets['Drug_Crime'] = datasets['Drug_Crime'].drop(datasets['Drug_Crime'][datasets['Drug_Crime']['Time'] == '(null)'].index)    
     datasets['Drug_Crime'].dropna(inplace=True)
 
-    # Adjust Column Values To Valid Readable Data
-    for col, delim, part in [('Year', '/', -1), ('Reported on:', '/', -1), ('Time', ':', 0)]:
-        datasets['Drug_Crime'][col] = split_and_isolate(datasets['Drug_Crime'][col], delim, part)
-
+    # Fix crime to be more readable
     crimes = {'CONTROLLED SUBSTANCE,INTENT TO': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
               'CONTROLLED SUBSTANCE, INTENT T': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
               'CONTROLLED SUBSTANCE, POSSESSI': '7 DEG POSS. OF CONTROLLED',
@@ -122,6 +119,22 @@ def preprocess_datasets(datasets):
               'POSS METH MANUFACT MATERIAL': 'POSS. OF METH MATERIALS'}
     datasets['Drug_Crime'] = convert_col_values(datasets['Drug_Crime'], columns=['Completed?', 'Crime'],
                                                 conv_maps=[{'COMPLETED': True, 'ATTEMPTED': False}, crimes])
+    
+    # Parse times to isolate years
+    for col, delim, part in [('Year', '/', -1), ('Reported on:', '/', -1)]:
+        datasets['Drug_Crime'][col] = split_and_isolate(datasets['Drug_Crime'][col], delim, part)
+    datasets['Drug_Crime']['Time'] = pd.to_datetime(datasets['Drug_Crime']['Time'], format='%H:%M:%S')
+    
+    time_day_col = []
+    for time in datasets['Drug_Crime']['Time']:
+        if 5 <= time.hour < 12:
+            time_day_col.append('morning')
+        elif 12 <= time.hour < 18:
+            time_day_col.append('afternoon')
+        else:
+            time_day_col.append('night')
+            
+    datasets['Drug_Crime'].insert(datasets['Drug_Crime'].columns.get_loc('Time') + 1, 'Time of Day', time_day_col)
     
     return datasets
         
