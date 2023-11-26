@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import nltk
+import re
 from nltk.tokenize import word_tokenize
 from nltk.probability import FreqDist
 from nltk.corpus import stopwords
@@ -48,3 +49,32 @@ def count_keywords(column, keywords:list = {}):
     key_count['other'] = other_count
 
     return key_count
+
+def filter_by_boro_feature(dataset, boro:str = None, feature = '', rename = True):
+    feature_list = ['', 'Pop Change', 'Natural Change', 'Net Migration', 'Pop_10', 'Pop_20']
+    assert feature in feature_list
+    
+    filtered_dataset = dataset if boro is None else dataset.loc[dataset['Borough'] == boro] 
+    population_col_filter = re.compile(f'.*{feature}')
+    filtered_cols = list(filter(population_col_filter.match, dataset.columns))
+    filtered_dataset = filtered_dataset[filtered_cols]
+    
+    if feature != '' and rename:
+        rename_cols = {}
+        for col in filtered_cols:
+            rename_cols[col] = col[:col.find(' ')]
+        filtered_dataset.rename(columns=rename_cols, inplace=True)
+    
+    return filtered_dataset
+
+def normalize(dataset, axis='row'):
+    if axis == 'row':
+        for row in dataset.index:
+            row_vals = dataset.loc[row].to_numpy()
+            dataset[row:row] = row_vals / np.linalg.norm(row_vals)
+    else:
+        for col in dataset.columns:
+            col_vals = dataset.loc[:, col]
+            dataset[col] = col_vals / np.linalg.norm(col_vals)
+        
+    return dataset
