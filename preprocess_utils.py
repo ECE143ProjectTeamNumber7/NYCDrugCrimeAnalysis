@@ -110,77 +110,109 @@ def get_precinct_info(dataset, merge:bool = False):
         return pd.merge(dataset, precincts_df, on = "Precinct", how = "left")
     
     return precincts_df
+
+def preprocess_drug_crime(dataset):
+    try:
+        # Rename columns
+        new_columns = {'CMPLNT_NUM': 'ID', 
+                    'CMPLNT_FR_DT': 'Year', 
+                    'CMPLNT_FR_TM': 'Time', 
+                    'RPT_DT': 'Reported on:', 
+                    'ADDR_PCT_CD': 'Precinct', 
+                    'OFNS_DESC': 'Description', 
+                    'CRM_ATPT_CPTD_CD': 'Completed?', 
+                    'LAW_CAT_CD': 'Crime Category',
+                    'PD_CD': 'NYC Penal Code',
+                    'PD_DESC': 'Crime'}
+        dataset.rename(columns=new_columns, inplace=True)
+
+        # Rearrange columns
+        dataset.drop(columns = ['CMPLNT_TO_TM', 'CMPLNT_TO_DT', 'Latitude', 'Longitude', 'KY_CD'], inplace = True, errors='ignore')
+        dataset.set_index('ID', inplace = True)
+        
+        # Rename and drop NaN of relevant columns
+        clean_cols = {'PARKS_NM': 'Not at a park', 
+                    'LOC_OF_OCCUR_DESC': 'Location not known',
+                    'HADEVELOPT': 'Not at a HA dev',
+                    'BORO_NM': 'Borough not known',
+                    'PREM_TYP_DESC': 'Premise not known'}
+        for col in clean_cols:
+            dataset[col] = replace_column_nan(dataset[col], oldnan='(null)').fillna(clean_cols[col])
+
+        dataset = dataset.drop(dataset[dataset['Time'] == '(null)'].index)    
+        dataset.dropna(inplace=True)
+
+        # Fix crime to be more readable
+        crimes = {'CONTROLLED SUBSTANCE,INTENT TO': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
+                'CONTROLLED SUBSTANCE, INTENT T': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
+                'CONTROLLED SUBSTANCE, POSSESSI': '7 DEG POSS. OF CONTROLLED',
+                'CONTROLLED SUBSTANCE,POSSESS.': '3, 4, 5 DEG POSS. OF CONTROLLED SUBSTANCE',
+                'CONTROLLED SUBSTANCE,POSSESS.-': '1 & 2 DEG POSS. OF CONTROLLED SUBSTANCE',
+                'CONTROLLED SUBSTANCE, SALE 5': '5 DEG SALE OF CONTROLLED SUBSTANCE',
+                'CONTROLLED SUBSTANCE, SALE 4': '4 DEG SALE OF CONTROLLED SUBSTANCE',
+                'CONTROLLED SUBSTANCE,SALE 3': '3 DEG SALE OF CONTROLLED SUBSTANCE',
+                'CONTROLLED SUBSTANCE,SALE 2': '2 DEG SALE OF CONTROLLED SUBSTANCE',
+                'CONTROLLED SUBSTANCE,SALE 1': '1 DEG SALE OF CONTROLLED SUBSTANCE',
+                'MARIJUANA, POSSESSION 4 & 5': '4 & 5 DEG POSS. OF MARIJUANA',
+                'MARIJUANA, SALE 4 & 5': '4 & 5 DEG SALE OF MARIJUANA',
+                'MARIJUANA, POSSESSION 1, 2 & 3': '1, 2, 3 DEG POSS. OF MARIJUANA',
+                'MARIJUANA, SALE 1, 2 & 3': '1, 2, 3 DEG SALE OF MARIJUANA',
+                'DRUG PARAPHERNALIA,   POSSESSE': 'POSS. OF PARAPHERNALIA',
+                'POSSESSION HYPODERMIC INSTRUME': 'POSS. OF HYPODERMIC INSTRUMENTS',
+                'SALE SCHOOL GROUNDS 4': 'SALE SCHOOL GROUNDS',
+                'SALE SCHOOL GROUNDS': 'SALE SCHOOL GROUNDS',
+                'SALES OF PRESCRIPTION': 'SALES OF PRESCRIPTION',
+                'UNDER THE INFLUENCE OF DRUGS': 'UNDER THE INFLUENCE OF DRUGS',
+                'DRUG, INJECTION OF': 'INJECTION OF NARCOTICONTROLLED SUBSTANCE',
+                'LOITERING 1ST DEGREE FOR DRUG': '1 DEG LOITERING FOR DRUGS',
+                'USE CHILD TO COMMIT CONT SUB OFF': 'USE CHILD TO COMMIT CONTROLLED SUBSTANCE CRIMES',
+                'POSS METH MANUFACT MATERIAL': 'POSS. OF METH MATERIALS'}
+        dataset = convert_col_values(dataset, columns=['Completed?', 'Crime'],
+                                                    conv_maps=[{'COMPLETED': True, 'ATTEMPTED': False}, crimes])
+        
+        # Parse dates for years only
+        for col, delim, part in [('Year', '/', -1), ('Reported on:', '/', -1)]:
+            dataset[col] = split_and_isolate(dataset[col], delim, part)
+            
+        # Convert time to DateTime and parse times for time of day and merge to original dataset
+        dataset['Time'] = pd.to_datetime(dataset['Time'], format='%H:%M:%S').dt.time
+        dataset = get_time_day(dataset, merge=True)
+        
+        # Convert precinct numbers to the actual discernable precinct centers and details
+        dataset = get_precinct_info(dataset, merge=True)
+    except:
+        raise Exception('An invalid dataset with vital columns missing was provided, please provide a valid (unprocessed) Drug_Crime dataset!')
+    return dataset
+
+def preprocess_census(datasets:dict):
+    try:
+        population_col_filter = re.compile('.*_[0-9]+')
+        merged_census = pd.DataFrame()
+        for race in datasets:
+            if merged_census.empty: # If any of the columns does not exist, this will raise an error to be caught to raise an invalid dataset exception
+                for col in ['GeoID', 'GeoType', 'Borough', 'GeoID', 'Name']:
+                    merged_census[col] = datasets[race][col]
+            
+            rename_cols = {'Pop Change': f'{race} Pop Change', 'Natural Change': f'{race} Natural Change', 'Net Migration': f'{race} Net Migration'}
+            for name in list(filter(population_col_filter.match, datasets[race].columns)):
+                rename_cols[name] = race + '_Pop' + name[-3:]
+            datasets[race].rename(columns=rename_cols, inplace=True)
+
+            merge_keys = ['GeoID'] + list(rename_cols.values())
+            merged_census = pd.merge(merged_census, datasets[race][merge_keys], on = "GeoID", how = "left")
+            
+        merged_census.set_index('GeoID', inplace = True)
+    except:
+        raise Exception('An invalid dataset with vital columns missing was provided, please provide a valid (unprocessed) Census dataset!')
+    
+    return merged_census
     
 def preprocess_datasets(datasets):
     '''
     '''
-    # Rename columns
-    new_columns = {'CMPLNT_NUM': 'ID', 
-                   'CMPLNT_FR_DT': 'Year', 
-                   'CMPLNT_FR_TM': 'Time', 
-                   'RPT_DT': 'Reported on:', 
-                   'ADDR_PCT_CD': 'Precinct', 
-                   'OFNS_DESC': 'Description', 
-                   'CRM_ATPT_CPTD_CD': 'Completed?', 
-                   'LAW_CAT_CD': 'Crime Category',
-                   'PD_CD': 'NYC Penal Code',
-                   'PD_DESC': 'Crime'}
-    datasets['Drug_Crime'].rename(columns=new_columns, inplace=True)
-
-    # Rearrange columns
-    datasets['Drug_Crime'].drop(columns = ['CMPLNT_TO_TM', 'CMPLNT_TO_DT', 'Latitude', 'Longitude', 'KY_CD'], inplace = True)
-    datasets['Drug_Crime'].set_index('ID', inplace = True)
+    new_datasets = {}
+    new_datasets['Drug_Crime'] = preprocess_drug_crime(datasets['Drug_Crime'])
+    new_datasets['Census'] = preprocess_census({x: datasets[x] for x in datasets if x != 'Drug_Crime'})
     
-    # Rename and drop NaN of relevant columns
-    clean_cols = {'PARKS_NM': 'Not at a park', 
-                  'LOC_OF_OCCUR_DESC': 'Location not known',
-                  'HADEVELOPT': 'Not at a HA dev',
-                  'BORO_NM': 'Borough not known',
-                  'PREM_TYP_DESC': 'Premise not known'}
-    for col in clean_cols:
-        datasets['Drug_Crime'][col] = replace_column_nan(datasets["Drug_Crime"][col], oldnan='(null)').fillna(clean_cols[col])
-
-    datasets['Drug_Crime'] = datasets['Drug_Crime'].drop(datasets['Drug_Crime'][datasets['Drug_Crime']['Time'] == '(null)'].index)    
-    datasets['Drug_Crime'].dropna(inplace=True)
-
-    # Fix crime to be more readable
-    crimes = {'CONTROLLED SUBSTANCE,INTENT TO': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
-              'CONTROLLED SUBSTANCE, INTENT T': 'POSS. OF CONTROLLED SUBSTANCE W/ INTENT TO SELL',
-              'CONTROLLED SUBSTANCE, POSSESSI': '7 DEG POSS. OF CONTROLLED',
-              'CONTROLLED SUBSTANCE,POSSESS.': '3, 4, 5 DEG POSS. OF CONTROLLED SUBSTANCE',
-              'CONTROLLED SUBSTANCE,POSSESS.-': '1 & 2 DEG POSS. OF CONTROLLED SUBSTANCE',
-              'CONTROLLED SUBSTANCE, SALE 5': '5 DEG SALE OF CONTROLLED SUBSTANCE',
-              'CONTROLLED SUBSTANCE, SALE 4': '4 DEG SALE OF CONTROLLED SUBSTANCE',
-              'CONTROLLED SUBSTANCE,SALE 3': '3 DEG SALE OF CONTROLLED SUBSTANCE',
-              'CONTROLLED SUBSTANCE,SALE 2': '2 DEG SALE OF CONTROLLED SUBSTANCE',
-              'CONTROLLED SUBSTANCE,SALE 1': '1 DEG SALE OF CONTROLLED SUBSTANCE',
-              'MARIJUANA, POSSESSION 4 & 5': '4 & 5 DEG POSS. OF MARIJUANA',
-              'MARIJUANA, SALE 4 & 5': '4 & 5 DEG SALE OF MARIJUANA',
-              'MARIJUANA, POSSESSION 1, 2 & 3': '1, 2, 3 DEG POSS. OF MARIJUANA',
-              'MARIJUANA, SALE 1, 2 & 3': '1, 2, 3 DEG SALE OF MARIJUANA',
-              'DRUG PARAPHERNALIA,   POSSESSE': 'POSS. OF PARAPHERNALIA',
-              'POSSESSION HYPODERMIC INSTRUME': 'POSS. OF HYPODERMIC INSTRUMENTS',
-              'SALE SCHOOL GROUNDS 4': 'SALE SCHOOL GROUNDS',
-              'SALE SCHOOL GROUNDS': 'SALE SCHOOL GROUNDS',
-              'SALES OF PRESCRIPTION': 'SALES OF PRESCRIPTION',
-              'UNDER THE INFLUENCE OF DRUGS': 'UNDER THE INFLUENCE OF DRUGS',
-              'DRUG, INJECTION OF': 'INJECTION OF NARCOTICONTROLLED SUBSTANCE',
-              'LOITERING 1ST DEGREE FOR DRUG': '1 DEG LOITERING FOR DRUGS',
-              'USE CHILD TO COMMIT CONT SUB OFF': 'USE CHILD TO COMMIT CONTROLLED SUBSTANCE CRIMES',
-              'POSS METH MANUFACT MATERIAL': 'POSS. OF METH MATERIALS'}
-    datasets['Drug_Crime'] = convert_col_values(datasets['Drug_Crime'], columns=['Completed?', 'Crime'],
-                                                conv_maps=[{'COMPLETED': True, 'ATTEMPTED': False}, crimes])
-    
-    # Parse dates for years only
-    for col, delim, part in [('Year', '/', -1), ('Reported on:', '/', -1)]:
-        datasets['Drug_Crime'][col] = split_and_isolate(datasets['Drug_Crime'][col], delim, part)
-        
-    # Convert time to DateTime and parse times for time of day and merge to original dataset
-    datasets['Drug_Crime']['Time'] = pd.to_datetime(datasets['Drug_Crime']['Time'], format='%H:%M:%S').dt.time
-    datasets['Drug_Crime'] = get_time_day(datasets['Drug_Crime'], merge=True)
-    
-    # Convert precinct numbers to the actual discernable precinct centers and details
-    datasets['Drug_Crime'] = get_precinct_info(datasets['Drug_Crime'], merge=True)
-    
-    return datasets
+    return new_datasets
         
