@@ -193,13 +193,16 @@ def preprocess_census(datasets:dict):
                 for col in ['GeoID', 'GeoType', 'Borough', 'GeoID', 'Name']:
                     merged_census[col] = datasets[race][col]
             
-            # Rename columns while simultaneously fixing relevant value datatypes
+            # Rename columns
             rename_cols = {'Pop Change': f'{race} Pop Change', 'Natural Change': f'{race} Natural Change', 'Net Migration': f'{race} Net Migration'}
             for name in list(filter(population_col_filter.match, datasets[race].columns)):
                 rename_cols[name] = race + ' Pop' + name[-3:]
-                datasets[race][name] = datasets[race][name].str.replace(',', '').astype('int64')
             datasets[race].rename(columns=rename_cols, inplace=True)
-
+            
+            # Fix dtypes
+            for col in rename_cols.values():
+                datasets[race][col] = datasets[race][col].str.replace(',', '').astype('int64')
+                
             merge_keys = ['GeoID'] + list(rename_cols.values())
             merged_census = pd.merge(merged_census, datasets[race][merge_keys], on = "GeoID", how = "left")
             

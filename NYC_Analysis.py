@@ -12,7 +12,8 @@ def main():
     # print(datasets['Drug_Crime']['Precinct'])
     # print(du.precincts(datasets['Drug_Crime']['Precinct']))
     
-    print(du.filter_by_boro_feature(datasets['Census'], feature='Pop_10').dtypes)
+    print(datasets['Census'].dtypes)
+    # print(du.filter_by_boro_feature(datasets['Census'], feature='Pop_10').dtypes)
 #     boro = 'Manhattan'
 # datasets['Census'].loc[datasets['Census']['Borough'] == boro]
 
