@@ -22,6 +22,9 @@
 * [Matplotlib/Plotly]
 
 ### How To Use
+1. **Install Necessary Modules**
+The modules listed above are used to run the visualizations. Installing [Anaconda](https://www.anaconda.com/) is suggested; however, only those are required at minimum and can be installed with `pip`. Having the same version is crucial; some visualizations utlize features from more recent versioins.
+2. 
 
 ### Proposal
 As you are aware, drug-related crimes have been a persistent issue in urban areas,

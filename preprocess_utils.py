@@ -5,6 +5,7 @@ import glob
 import os
 import re
 from bs4 import BeautifulSoup
+from ast import literal_eval
 
 def import_data(filenames = []):
     '''
@@ -170,14 +171,18 @@ def preprocess_drug_crime(dataset):
         dataset = convert_col_values(dataset, columns=['Completed?', 'Crime'],
                                                     conv_maps=[{'COMPLETED': True, 'ATTEMPTED': False}, crimes])
         
-        # Parse dates for years only
+        # Parse dates for years only and convert to int
         for col, delim, part in [('Year', '/', -1), ('Reported on:', '/', -1)]:
             dataset[col] = split_and_isolate(dataset[col], delim, part)
+            dataset[col] = dataset[col].astype('int64')
             
         # Convert time to DateTime and parse times for time of day and merge to original dataset
         dataset['Time'] = pd.to_datetime(dataset['Time'], format='%H:%M:%S').dt.time
         dataset = get_time_day(dataset, merge=True)
-        
+
+        # Convert Lat_Long from string to tuple
+        dataset['Lat_Lon'] = dataset['Lat_Lon'].apply(lambda x: eval(x))
+
         # Convert precinct numbers to the actual discernable precinct centers and details
         dataset = get_precinct_info(dataset, merge=True)
     except:
