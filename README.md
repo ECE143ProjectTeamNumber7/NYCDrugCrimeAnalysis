@@ -23,7 +23,7 @@
 
 ### How To Use
 1. **Install Necessary Modules**
-The modules listed above are used to run the visualizations. Installing [Anaconda](https://www.anaconda.com/) is suggested; however, only those are required at minimum and can be installed with `pip`. Having the same version is crucial; some visualizations utlize features from more recent versioins.
+The modules listed above are used to run the visualizations. Installing [Anaconda](https://www.anaconda.com/) is suggested; however, only the ones listed above are required at minimum and can be installed with `pip`. Note that some modules, such as *folium* or *shapely*, may not be included with anaconda and will require seperate installation with `pip`. In the Notebook, some functions require dependencies that may not be included in Anaconda and may vary across machines; thus, it is vital you pay careful attention to possible errors raised by missing dependencies. Having the same version is crucial; some visualizations utlize features from more recent versioins.
 2. 
 
 ### Proposal

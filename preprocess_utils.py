@@ -108,7 +108,7 @@ def get_precinct_info(dataset, merge:bool = False):
     precincts_df['Precinct'] = precincts_df['Precinct'].astype(int)
 
     if merge:
-        return pd.merge(dataset, precincts_df, on = "Precinct", how = "left")
+        return dataset.reset_index().merge(precincts_df, on = 'Precinct', how='left').set_index('ID')
     
     return precincts_df
 
