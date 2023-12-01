@@ -1,44 +1,9 @@
 import pandas as pd
 import numpy as np
 import requests
-import glob
-import os
 import re
 from bs4 import BeautifulSoup
 from ast import literal_eval
-
-def import_data(filenames = []):
-    '''
-    Imports datasets of all given filenames. 
-    If filenames is empty, this will import all relevant dataset CSVs instead, i.e. Drug_Crime, and all 5 CSVs of 2020_Census/.
-    
-    Parameters:
-        filenames (list):   Optional. List of CSV file names as strings. It is assumed that the filenames will be relative to the current directory.
-                            If left empty or an empty list is passed in, it will import all relevant dataset CSVs located in data/
-    
-    Returns:
-        List of datasets as a list tuple where datasets[0] is the file basename and datasets[1] is the pandas dataframe.
-    '''
-    assert isinstance(filenames, list)
-
-    if len(filenames) == 0:
-        filenames = [os.getcwd() + '/data/Drug_Crime_20231111.csv']
-        filenames += glob.glob(os.getcwd() + '/data/2020_Census/*.csv')
-
-    datasets = {}
-    for filename in filenames:
-        assert isinstance(filename, str)
-        assert '.csv' in filename
-
-        df = pd.read_csv(filename)
-        
-        label_loc = filename.find('Total-Population-')
-        if 'Drug_Crime' in filename:
-            datasets['Drug_Crime'] = df
-        elif label_loc != -1:
-            datasets[filename[label_loc + len('Total-Population-'):-4]] = df
-
-    return datasets
 
 def replace_column_nan(column, oldnan, newnan = np.nan):
     '''
@@ -137,13 +102,16 @@ def clean_missing_boroughs(dataset, validity_threshold = 0.2):
         if target_precinct in precinct_map.keys():
             dataset.loc[target, 'BORO_NM'] = precinct_map[target_precinct]
 
+    # TODO: DROP REMAINING UNKNOWN
+    dataset = dataset[dataset['BORO_NM'] != 'Borough not known']
+
     return dataset
 
 def preprocess_drug_crime(dataset):
     try:
         # Rename columns
         new_columns = {'CMPLNT_NUM': 'ID', 
-                    'CMPLNT_FR_DT': 'Year', 
+                    'CMPLNT_FR_DT': 'Date', 
                     'CMPLNT_FR_TM': 'Time', 
                     'RPT_DT': 'Reported on:', 
                     'ADDR_PCT_CD': 'Precinct', 
@@ -198,10 +166,10 @@ def preprocess_drug_crime(dataset):
         dataset = convert_col_values(dataset, columns=['Completed?', 'Crime'],
                                                     conv_maps=[{'COMPLETED': True, 'ATTEMPTED': False}, crimes])
         
-        # Parse dates for years only and convert to int
-        for col, delim, part in [('Year', '/', -1), ('Reported on:', '/', -1)]:
-            dataset[col] = split_and_isolate(dataset[col], delim, part)
-            dataset[col] = dataset[col].astype('int64')
+        # Parse dates for years and months and set to its own column and convert to int
+        for col, new_col, delim, part in [('Date', 'Year', '/', 2), ('Date', 'Month', '/', 0), ('Reported on:', 'Reported on:', '/', -1)]:
+            dataset[new_col] = split_and_isolate(dataset[col], delim, part)
+            dataset[new_col] = dataset[new_col].astype('int64')
             
         # Convert time to DateTime and parse times for time of day and merge to original dataset
         dataset['Time'] = pd.to_datetime(dataset['Time'], format='%H:%M:%S').dt.time
@@ -247,9 +215,17 @@ def preprocess_census(datasets:dict):
 def preprocess_datasets(datasets):
     '''
     '''
+    census_keys = ['All', 'Asian', 'Black', 'Hispanic', 'White']
     new_datasets = {}
-    new_datasets['Drug_Crime'] = preprocess_drug_crime(datasets['Drug_Crime'])
-    new_datasets['Census'] = preprocess_census({x: datasets[x] for x in datasets if x != 'Drug_Crime'})
+    if 'Drug_Crime' in datasets:
+        new_datasets['Drug_Crime'] = preprocess_drug_crime(datasets['Drug_Crime'])
+
+    census_datasets = {}
+    for x in datasets:
+        if x in census_keys:
+            census_datasets[x] = datasets[x]
+
+    new_datasets['Census'] = preprocess_census(census_datasets)
     
     return new_datasets
         

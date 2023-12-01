@@ -9,7 +9,7 @@ from nltk.tokenize import word_tokenize
 from nltk.probability import FreqDist
 from nltk.corpus import stopwords
 
-def import_data(filenames = []):
+def import_csv_data(filenames = []):
     '''
     Imports datasets of all given filenames. 
     If filenames is empty, this will import all relevant dataset CSVs instead, i.e. Drug_Crime, and all 5 CSVs of 2020_Census/.
