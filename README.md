@@ -54,37 +54,66 @@
 * [shapely]()
 
 ### How To Use
-1. **Install Necessary Modules**
+1. **Downloading the Repository**
+2. **Install Necessary Modules**
 The modules listed above are used to run the visualizations. Installing [Anaconda](https://www.anaconda.com/) is suggested; however, only the ones listed above are required at minimum and can be installed with `pip`. Note that some modules, such as *folium* or *shapely*, may not be included with anaconda and will require seperate installation with `pip`. In the Notebook, some functions require dependencies that may not be included in Anaconda and may vary across machines; thus, it is vital you pay careful attention to possible errors raised by missing dependencies. Having the same version is crucial; some visualizations utlize features from more recent versioins.
-2. **Running Code**
-    - *Visualizations Only:* Open the notebook in `VSCode` or via `jupyter notebook` in a terminal with anaconda. Press `>> Run all` to run all visualization code.
-    - *Importing and **Quick** Preprocessing:*
+3. 
+    - *Importing:*
+        ```Python
+        import data_utils as du
+        
+        #### Step 1: Read in the raw dataset. 
+        # import_csv_data() will return a dict with the filename as the key and the dataset as a pd.DataFrame as the value.
+        # Leaving it blank like below will import all relevant datasets (Drug_Crime and 2020_Census/) and also rename them to a simplified form. 
+        # Note: If you have other .csv datasets, their keys *will not* be renamed.
+        # This line will store {'Drug_Crme': {...}, 'All': {...}, 'Asian': {...}, 'White': {...}, ...}
+        # Indices are: ['All', 'Asian', 'Black', 'Hispanic', 'White']
+        raw_datasets = du.import_csv_data()
+    - *Preprocessing Option 1*: 
         * In this case, quick preprocessing does not mean it is fast at its job, but rather preprocessing is done at the "press of a button". The datasets are large, so preprocessing takes some time.
-        > ```Python
-        > import data_utils as du
-        > 
-        > #### Step 1: Read in the raw dataset. 
-        > # import_csv_data() will return a dict with the filename as the key and the dataset as a pd.DataFrame as the value.
-        > # Leaving it blank like below will import all relevant datasets (Drug_Crime and 2020_Census/) and also rename them to a simplified form. 
-        > # Note: If you have other .csv datasets, their keys *will not* be renamed.
-        > # This line will store {'Drug_Crme': {...}, 'All': {...}, 'Asian': {...}, 'White': {...}, ...}
-        > # Indices are: ['All', 'Asian', 'Black', 'Hispanic', 'White']
-        > raw_datasets = du.import_csv_data()
-        >
-        > #### Step 2: Preprocess the raw dataset.
-        > # preprocess_datasets() will automatically perform all preprocessing on the primary datasets (Drug_Crime, 2020_Census).
-        > # The dict with each of the datasets should must be provded for any preprocessing to occur. 
-        > # However, the dict is not required to be filled or complete with all the raw_datasets; although, it is better to do so in order to preprocess all at once.
-        > # Only datasets in the dict with keys belong in ['Drug_Crime', 'All', 'Asian', 'Black', 'Hispanic', 'White'] will be preprocessed.
-        > # Moreover, the provided census datasets will be merged into one dataset.
-        > # This line will store {'Drug_Crime': {...}, 'Census': {...}}
-        > # Indices are: ['Drug_Crime', 'Census']
-        > datasets = pu.preprocess_datasets(raw_datasets)
-        > ```
+        ```Python
+        #### Step 2: Preprocess the raw dataset.
+        # preprocess_datasets() will automatically perform all preprocessing on the primary datasets (Drug_Crime, 2020_Census).
+        # The dict with each of the datasets should must be provded for any preprocessing to occur. 
+        # However, the dict is not required to be filled or complete with all the raw_datasets; although, it is better to do so in order to preprocess all at once.
+        # Only datasets in the dict with keys belong in ['Drug_Crime', 'All', 'Asian', 'Black', 'Hispanic', 'White'] will be preprocessed.
+        # Moreover, the provided census datasets will be merged into one dataset.
+        # This line will store {'Drug_Crime': {...}, 'Census': {...}}
+        # Indices are: ['Drug_Crime', 'Census']
+        datasets = pu.preprocess_datasets(raw_datasets)
+        ```
     - *Manual Preprocessing:*
 
-3. **Data Manipulation**
-Data manipulation is expected to be manual, but some semi-generalized functions are provided to help simplify the process.
+4. **Data Manipulation**
+Data manipulation is expected to be manual, but some semi-generalized functions are provided to help simplify the process:
+
+    * `def count_time_part(time_col, times = {'hour': 0, 'minute': 0, 'second': 0})`
+    Provides a count dict (similar to value_counts) of the provided individual relevant parts of the time column.
+        > Parameters:
+            
+        - time_col : pd.Series   
+            Column of `datatime.time` objects to parse through
+        - times : dict, list, int  
+            Optional. Dictonary, list, or integer containing the desired part of the time. 
+            As a dict object, the start time can be set as well for the desired part of the time, i.e. `{'hour': 2}`. This is the equivalent to rotating the time set. Default is 0. Allowed input values are `['hour', 'minute', 'second']`. Setting start time should wrap around, i.e. 60 -> 0, 24 -> 0.
+        
+        > Returns:
+        - dict of dict of counts. Keys will be the desired part provided in `times`. 
+            Each item is a dictonary of every time value and their counts, with the first element being the start time set by times.
+
+        > Example:
+        
+        - Getting a count of each hour from 0 to 23, where result dictionary is sorted to start at hour 5.
+            > ```Python
+            > >>> du.count_time_part(datasets['Drug_Crime']['Time'], times={'hour': 5})['hour']
+            > {5: 2436, 6: 5793, 7: 3215, 8: 4760, 9: 6801, 10: 8256, 11: 11910, 
+            > 12: 16966, 13: 21710, 14: 24486, 15: 25085, 16: 28492, 17: 28840, 
+            > 18: 30384, 19: 35957, 20: 35824, 21: 34066, 22: 32063, 23: 26056, 
+            > 0: 22272, 1: 17901, 2: 10131, 3: 6318, 4: 3768}
+
+    `group_count_parks(parks)`
+5. **Running Our Visualizations** 
+Open `NYC_Drug_Crime_Visualizations.ipynb` in `VSCode` or via `jupyter notebook` in a terminal with anaconda. Press `>> Run all` to run all visualization code.
 
 
 ### Proposal
