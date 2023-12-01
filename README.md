@@ -58,20 +58,23 @@
 The modules listed above are used to run the visualizations. Installing [Anaconda](https://www.anaconda.com/) is suggested; however, only the ones listed above are required at minimum and can be installed with `pip`. Note that some modules, such as *folium* or *shapely*, may not be included with anaconda and will require seperate installation with `pip`. In the Notebook, some functions require dependencies that may not be included in Anaconda and may vary across machines; thus, it is vital you pay careful attention to possible errors raised by missing dependencies. Having the same version is crucial; some visualizations utlize features from more recent versioins.
 2. **Running Code**
     - *Visualizations Only:* Open the notebook in `VSCode` or via `jupyter notebook` in a terminal with anaconda. Press `>> Run all` to run all visualization code.
-    - *Importing and **Fast** Preprocessing:*
+    - *Importing and **Quick** Preprocessing:*
+        * In this case, quick preprocessing does not mean it is fast at its job, but rather preprocessing is done at the "press of a button". The datasets are large, so preprocessing takes some time.
         > ```Python
         > import data_utils as du
         > 
         > #### Step 1: Read in the raw dataset. 
         > # import_csv_data() will return a dict with the filename as the key and the dataset as a pd.DataFrame as the value.
-        > # Leaving it blank like below will import all relevant datasets (Drug_Crime and 2020_Census/) and also rename them to a simplified form. Note: If you have other .csv datasets, their keys *will not* be renamed.
+        > # Leaving it blank like below will import all relevant datasets (Drug_Crime and 2020_Census/) and also rename them to a simplified form. 
+        > # Note: If you have other .csv datasets, their keys *will not* be renamed.
         > # This line will store {'Drug_Crme': {...}, 'All': {...}, 'Asian': {...}, 'White': {...}, ...}
         > # Indices are: ['All', 'Asian', 'Black', 'Hispanic', 'White']
         > raw_datasets = du.import_csv_data()
         >
         > #### Step 2: Preprocess the raw dataset.
         > # preprocess_datasets() will automatically perform all preprocessing on the primary datasets (Drug_Crime, 2020_Census).
-        > # The dict with each of the datasets should must be provded for any preprocessing to occur; however, the dict is not required to be filled or complete with all the raw_datasets. Although, it is better to do so in order to preprocess all at once.
+        > # The dict with each of the datasets should must be provded for any preprocessing to occur. 
+        > # However, the dict is not required to be filled or complete with all the raw_datasets; although, it is better to do so in order to preprocess all at once.
         > # Only datasets in the dict with keys belong in ['Drug_Crime', 'All', 'Asian', 'Black', 'Hispanic', 'White'] will be preprocessed.
         > # Moreover, the provided census datasets will be merged into one dataset.
         > # This line will store {'Drug_Crime': {...}, 'Census': {...}}
