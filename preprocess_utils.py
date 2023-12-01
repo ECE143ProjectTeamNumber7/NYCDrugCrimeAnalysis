@@ -112,6 +112,33 @@ def get_precinct_info(dataset, merge:bool = False):
     
     return precincts_df
 
+def clean_missing_boroughs(dataset, validity_threshold = 0.2):
+    grouped_dataset = dataset.groupby('BORO_NM')
+    
+    precinct_map = {}
+    for borough, group in grouped_dataset:
+        if borough == 'Borough not known':
+            target_indices = list(group.index)
+        else:
+            precinct_counts = group['Precinct'].value_counts()
+            counts = list(precinct_counts.to_dict().values())  # get counts of all precinct in descending order
+            drop_index = 0
+            for i in range(1, len(counts)):
+                if counts[i] / counts[i - 1] < validity_threshold:
+                    drop_index = i
+                    break
+            
+            for index, value in zip(list(range(0, len(counts))), precinct_counts.items()):
+                if index < drop_index:
+                    precinct_map[value[0]] = borough
+
+    for target in target_indices:
+        target_precinct = dataset.loc[target, 'Precinct']
+        if target_precinct in precinct_map.keys():
+            dataset.loc[target, 'BORO_NM'] = precinct_map[target_precinct]
+
+    return dataset
+
 def preprocess_drug_crime(dataset):
     try:
         # Rename columns
@@ -185,6 +212,8 @@ def preprocess_drug_crime(dataset):
 
         # Convert precinct numbers to the actual discernable precinct centers and details
         dataset = get_precinct_info(dataset, merge=True)
+
+        clean_missing_boroughs(dataset)
     except:
         raise Exception('An invalid dataset with vital columns missing was provided, please provide a valid (unprocessed) Drug_Crime dataset!')
     return dataset
