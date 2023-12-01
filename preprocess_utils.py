@@ -7,6 +7,7 @@ from ast import literal_eval
 
 def replace_column_nan(column, oldnan, newnan = np.nan):
     '''
+    replaces nan values for the respective column and returns new column
     '''
     new_column = column.apply(lambda x: newnan if x == oldnan else x)
     
@@ -25,11 +26,15 @@ def convert_col_values(dataset, columns:list = [], conv_maps = [{}]):
 
 def split_and_isolate(column, delim:str, part_index:int = None):
     '''
+    Parses data and returns it. This is used for the calendar and time columns.
     '''
     data_split = column.str.split(delim)
     return data_split if part_index is None else data_split.str[part_index]
 
 def get_time_day(dataset, merge:bool = False):    
+    '''
+    categorizes hour column of dataset into morning, afternoon, and night and stores in new column.
+    '''
     time_day_col = []
     for time in dataset['Time']:
         if 5 <= time.hour < 12:
@@ -46,7 +51,14 @@ def get_time_day(dataset, merge:bool = False):
     return pd.DataFrame({'Time of Day': time_day_col})
 
 def get_precinct_info(dataset, merge:bool = False):
+    '''
+    Performs web scraping to get addresses from precinct numbers and applies address information to dataframe.
+    
+    '''
     def digit_extraction(col):
+        '''
+        use regular expressions to extract only numerical data from column entries in the web scraping process
+        '''
         numbers = re.findall(r'\d+', col)
         if numbers:
             return numbers[0]
@@ -78,6 +90,14 @@ def get_precinct_info(dataset, merge:bool = False):
     return precincts_df
 
 def clean_missing_boroughs(dataset, validity_threshold = 0.2):
+    '''
+    Cleans precinct column sorting it and dropping unknown boroughs
+
+    params: dataset, validity_threshold
+    type: pd.DataFrame, float
+    rtype: pd.DataFrame
+    return: drug crime dataframe with modified borough name column
+    '''
     grouped_dataset = dataset.groupby('BORO_NM')
     
     precinct_map = {}
@@ -108,6 +128,17 @@ def clean_missing_boroughs(dataset, validity_threshold = 0.2):
     return dataset
 
 def preprocess_drug_crime(dataset):
+    '''
+
+    Takes in drug crime dataset and performs transformations such as renaming columns, dropping duplicates, cleaning missing values.
+
+        params: dataset
+        type: pd.DataFrame
+        rtype: pd.DataFrame
+        return: modified drug crime data
+
+
+    '''
     try:
         # Rename columns
         new_columns = {'CMPLNT_NUM': 'ID', 
@@ -185,6 +216,19 @@ def preprocess_drug_crime(dataset):
     return dataset
 
 def preprocess_census(datasets:dict):
+
+
+    '''
+
+    Preprocesses census data by renaming columns, and merging of columns.
+
+    params: dataset
+    type: pd.DataFrame
+    rtype: pd.DataFrame
+    return: merged census data
+
+
+    ''' 
     try:
         population_col_filter = re.compile('.*_[0-9]+')
         merged_census = pd.DataFrame()
@@ -214,6 +258,12 @@ def preprocess_census(datasets:dict):
     
 def preprocess_datasets(datasets):
     '''
+    Calls both preprocess_drug_crime and preprocess_census
+
+    params: datasets
+    type: pd.DataFrame
+    rtype: pd.DataFrame
+    return: modified drug_crime and census data
     '''
     census_keys = ['All', 'Asian', 'Black', 'Hispanic', 'White']
     new_datasets = {}
