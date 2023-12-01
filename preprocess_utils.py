@@ -212,8 +212,6 @@ def preprocess_drug_crime(dataset):
 
         # Convert precinct numbers to the actual discernable precinct centers and details
         dataset = get_precinct_info(dataset, merge=True)
-
-        clean_missing_boroughs(dataset)
     except:
         raise Exception('An invalid dataset with vital columns missing was provided, please provide a valid (unprocessed) Drug_Crime dataset!')
     return dataset
