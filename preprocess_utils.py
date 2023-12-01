@@ -125,7 +125,7 @@ def preprocess_drug_crime(dataset):
                     'PD_CD': 'NYC Penal Code',
                     'PD_DESC': 'Crime'}
         dataset.rename(columns=new_columns, inplace=True)
-
+        dataset = dataset.drop_duplicates()
         # Rearrange columns
         dataset.drop(columns = ['CMPLNT_TO_TM', 'CMPLNT_TO_DT', 'Latitude', 'Longitude', 'KY_CD'], inplace = True, errors='ignore')
         dataset.set_index('ID', inplace = True)
