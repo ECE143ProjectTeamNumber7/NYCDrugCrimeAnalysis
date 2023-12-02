@@ -46,19 +46,19 @@
 **Files**
 * [os](https://docs.python.org/3/library/os.html)
 * [glob](https://docs.python.org/3/library/glob.html)
-* [json]()
+* [json](https://docs.python.org/3/library/json.html)
 
 **Data Manipulation**
 * [pandas](https://pandas.pydata.org/docs/reference/index.html)
 * [numpy](https://numpy.org/doc/stable/reference/index.html#reference)
-* [statistics]()
+* [statistics](https://docs.python.org/3/library/statistics.html)
 
 **Visualization**
-* [matplotlib]()
-* [plotly]()
-* [seaborn]()
-* [folium]()
-* [shapely]()
+* [matplotlib](https://matplotlib.org/stable/users/index)
+* [plotly](https://plotly.com/python-api-reference/)
+* [seaborn](https://seaborn.pydata.org/api.html)
+* [folium](https://python-visualization.github.io/folium/latest/user_guide.html)
+* [shapely](https://shapely.readthedocs.io/en/stable/manual.html)
 
 ### How To Use
 * **Downloading this Repository**
@@ -73,7 +73,7 @@ The modules listed above are used to run the visualizations. Installing [Anacond
 * **Running Our Visualizations** 
 Open `NYC_Drug_Crime_Visualizations.ipynb` in `VSCode` or via `jupyter notebook` in a terminal with anaconda. Press `>> Run all` to run all visualization code. Everything used to run and analyze the datasets are included in the notebook.
 
-##### Self Analysis
+#### Self Analysis
 If you would like to perform your own analysis with our datasets, here is a guide to run the codes:
 1. **Importing Primary Datasets:**
     ```Python
@@ -105,15 +105,15 @@ If you would like to perform your own analysis with our datasets, here is a guid
         ```
     - *Additional Preprocessing:*
         * Additional preprocessng can be done on the dataset after quick preprocessing. Two that were performed on our dataset are provided. The decision to not include these steps in the quick preprocessing is ther capability for other uses. For example, the missing data in the years and be filled via machine learning using the existing data given an extremely good model. And the unknown boroughs may also be desired depending on the visualization or analytical uses, such as looking into if the lack of borough info can be associate with some cause.
-        > ```Python
-        > # Drop all rows before 2006 due to lack of sufficient data as shown in visualization
-        > datasets['Drug_Crime'] = datasets['Drug_Crime'].drop(datasets['Drug_Crime'][datasets['Drug_Crime']['Year'] < 2006].index)
-        > ```
-
-        > ```Python
-        > # Clean missing boroughs and drop any un-associated data values
-        > datasets['Drug_Crime'] = pu.clean_missing_boroughs(datasets['Drug_Crime'])
-        > ```
+            ```Python
+            # Drop all rows before 2006 due to lack of sufficient data as shown in visualization
+            datasets['Drug_Crime'] = datasets['Drug_Crime'].drop(datasets['Drug_Crime'][datasets['Drug_Crime']['Year'] < 2006].index)
+            ```
+            
+            ```Python
+            # Clean missing boroughs and drop any un-associated data values
+            datasets['Drug_Crime'] = pu.clean_missing_boroughs(datasets['Drug_Crime'])
+            ```
         * This uses the folowing functon in `preprocessing_utils`:
             `def clean_missing_boroughs(dataset, validity_threshold = 0.2)`
             Dataset by associating missing borough data with ther precinct numbers and dropping remaining unknown boroughs. `validity_threshold` can be used to specify a specific threshold to which a precinct number can be allowed assocated with a borough. Lower threshold $\Rightarrow$ more valid precinct numbers.
@@ -127,9 +127,9 @@ If you would like to perform your own analysis with our datasets, here is a guid
 
             > Example:
             - Cleans `Drug_Crime` dataset of missing borough values.
-                > ```Python
-                > datasets['Drug_Crime'] = pu.clean_missing_boroughs(datasets['Drug_Crime'])
-                > ```
+               ```Python
+               datasets['Drug_Crime'] = pu.clean_missing_boroughs(datasets['Drug_Crime'])
+               ```
 
 3. **Data Processing**
 Data manipulation is expected to be manual, but some semi-generalized functions are provided to help simplify the process in `data_utils` (suggested import convention: `import data_utils as du`):
@@ -150,13 +150,14 @@ Data manipulation is expected to be manual, but some semi-generalized functions 
 
         > Example:
         - Getting a count of each hour from 0 to 23, where result dictionary is sorted to start at hour 5.
-            > ```Python
-            > # datasets['Drug_Crime']['Time'] is a column
-            > >>> du.count_time_part(datasets['Drug_Crime']['Time'], times={'hour': 5})['hour']
-            > {5: 2436, 6: 5793, 7: 3215, 8: 4760, 9: 6801, 10: 8256, 11: 11910, 
-            > 12: 16966, 13: 21710, 14: 24486, 15: 25085, 16: 28492, 17: 28840, 
-            > 18: 30384, 19: 35957, 20: 35824, 21: 34066, 22: 32063, 23: 26056, 
-            > 0: 22272, 1: 17901, 2: 10131, 3: 6318, 4: 3768}
+            ```Python
+            # datasets['Drug_Crime']['Time'] is a column
+            >>> du.count_time_part(datasets['Drug_Crime']['Time'], times={'hour': 5})['hour']
+            {5: 2436, 6: 5793, 7: 3215, 8: 4760, 9: 6801, 10: 8256, 11: 11910, 
+            12: 16966, 13: 21710, 14: 24486, 15: 25085, 16: 28492, 17: 28840, 
+            18: 30384, 19: 35957, 20: 35824, 21: 34066, 22: 32063, 23: 26056, 
+            0: 22272, 1: 17901, 2: 10131, 3: 6318, 4: 3768}
+            ```
     <br>
 
     * `def group_count_parks(parks)`
@@ -171,11 +172,12 @@ Data manipulation is expected to be manual, but some semi-generalized functions 
 
         > Example:
         - Get a count of each park type in the `PARKS_NM` column.
-            > ```Python
-            > # datasets['Drug_Crime']['PARKS_NM'] is a column
-            > >>> du.group_count_parks(datasets['Drug_Crime']['PARKS_NM'])
-            > {'park': 442269, 'playground': 654, 'unnamed': 38, 'square': 548, 'bronx': 189, 
-            > 'garden': 17, 'river': 286, 'parkway': 83, 'beach': 235}
+            ```Python
+            # datasets['Drug_Crime']['PARKS_NM'] is a column
+            >>> du.group_count_parks(datasets['Drug_Crime']['PARKS_NM'])
+            {'park': 442269, 'playground': 654, 'unnamed': 38, 'square': 548, 'bronx': 189, 
+            'garden': 17, 'river': 286, 'parkway': 83, 'beach': 235}
+            ```
     <br>
 
     * `def filter_by_boro_feature(dataset, boro = '', feature = '', rename = True)`
@@ -196,18 +198,19 @@ Data manipulation is expected to be manual, but some semi-generalized functions 
 
         > Example:
         - Filter the dataset by the boroughs (total sum) on the `Pop_10` feature.
-            > ```Python
-            > # datasets['Drug_Crime']['PARKS_NM'] is a column
-            > >>> total_census = datasets['Census'].iloc[:][0:6].set_index('Borough', drop=False)
-            > >>> du.filter_by_boro_feature(total_census, feature='Pop_10')
-            >                   All         Asian       Black       Hispanic       White
-            > Borough 					
-            > New York City     8242624     1028119     1861295     2336076        2722904
-            > Manhattan         1585873     177624      205340      403577         761493
-            > Bronx             1385108     47335       416695      741413         151209
-            > Brooklyn          2504700     260129      799066      496285         893306
-            > Queens            2230722     508334      395881      613750         616727
-            > Staten Island     468730      34697       44313       81051          300169
+            ```Python
+            # datasets['Drug_Crime']['PARKS_NM'] is a column
+            >>> total_census = datasets['Census'].iloc[:][0:6].set_index('Borough', drop=False)
+            >>> du.filter_by_boro_feature(total_census, feature='Pop_10')
+                            All         Asian       Black       Hispanic       White
+            Borough 					
+            New York City     8242624     1028119     1861295     2336076        2722904
+            Manhattan         1585873     177624      205340      403577         761493
+            Bronx             1385108     47335       416695      741413         151209
+            Brooklyn          2504700     260129      799066      496285         893306
+            Queens            2230722     508334      395881      613750         616727
+            Staten Island     468730      34697       44313       81051          300169
+            ```
     <br>
 
     * `def normalize(dataset, axis='row', inplace=False)`
@@ -226,17 +229,18 @@ Data manipulation is expected to be manual, but some semi-generalized functions 
 
         > Example:
         - Normalized the filtered borough dataframe `filtered_race_10`.
-            > ```Python
-            > # datasets['Drug_Crime']['PARKS_NM'] is a column
-            > >>> du.normalize(filtered_race_10)
-            >                   All          Asian        Black        Hispanic 
-            > Borough 				
-            > New York City     0.246523     0.446302     0.560146     0.652899
-            > Manhattan         0.196578     0.227251     0.446641     0.842749
-            > Bronx             0.054715     0.481661     0.857006     0.174784
-            > Brooklyn          0.196613     0.603956     0.375106     0.675186
-            > Queens            0.469520     0.365654     0.566887     0.569637
-            > Staten Island     0.109810     0.140244     0.256513     0.949986
+            ```Python
+            # datasets['Drug_Crime']['PARKS_NM'] is a column
+            >>> du.normalize(filtered_race_10)
+                            All          Asian        Black        Hispanic 
+            Borough 				
+            New York City     0.246523     0.446302     0.560146     0.652899
+            Manhattan         0.196578     0.227251     0.446641     0.842749
+            Bronx             0.054715     0.481661     0.857006     0.174784
+            Brooklyn          0.196613     0.603956     0.375106     0.675186
+            Queens            0.469520     0.365654     0.566887     0.569637
+            Staten Island     0.109810     0.140244     0.256513     0.949986
+            ```
 
 ### Proposal
 As you are aware, drug-related crimes have been a persistent issue in urban areas, including New York City. Understanding the dynamics and patterns of these crimes can have significant implications for law enforcement and policymakers. Research in this field can provide insights into the underlying factors of drug-related crimes in NYC.
