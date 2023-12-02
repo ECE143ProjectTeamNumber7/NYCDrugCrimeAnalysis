@@ -2,7 +2,8 @@
 
 ### File Structure
 ```
-+-- data
++-- Map Results/
++-- data/
 |   +-- Drug_Crime_20231111.csv
 |   +-- 2020_Census/
 |   |   +-- dcp-comps-of-chg-StoryMap-data-032023-Total-Population-Asian.csv
@@ -41,6 +42,7 @@
 * `NYC_Drug_Crime_Visualizations.ipynb` is our visualization notebook
 * `NYC_Drug_Crime_Visualizations.html` is the html version of our html notebook. This is provided as some visualizations will not render correctly when viewed or downloaded on GitHub.
 * `ECE143_Team7_Presentation.pdf` is the pdf of our presentation.
+* `Map Results/` stores html folium maps in addition to the pdf and notebook in case they do not render in them.
 
 ### Modules
 **Files**
