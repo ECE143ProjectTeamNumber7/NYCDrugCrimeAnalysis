@@ -50,10 +50,15 @@ def get_time_day(dataset, merge:bool = False):
     
     return pd.DataFrame({'Time of Day': time_day_col})
 
-def get_precinct_info(dataset, merge:bool = False):
+def get_precinct_info(dataset, merge = False):
     '''
     Performs web scraping to get addresses from precinct numbers and applies address information to dataframe.
-    
+
+    Parameters: 
+        dataset : pd.DataFrame
+        merge : bool
+    Returns: 
+        pd.DataFrame drug crime dataframe with modified borough name column
     '''
     def digit_extraction(col):
         '''
@@ -63,6 +68,9 @@ def get_precinct_info(dataset, merge:bool = False):
         if numbers:
             return numbers[0]
         return None
+
+    assert isinstance(dataset, pd.DataFrame)
+    assert isinstance(merge, bool)
 
     precincts = dataset['Precinct'].sort_values()
     precincts.unique()
@@ -91,13 +99,18 @@ def get_precinct_info(dataset, merge:bool = False):
 
 def clean_missing_boroughs(dataset, validity_threshold = 0.2):
     '''
-    Cleans precinct column sorting it and dropping unknown boroughs
+    Dataset by associating missing borough data with ther precinct numbers and dropping remaining unknown boroughs.
+    validity_threshold can be used to specify a specific threshold to which a precinct number can be allowed assocated with a borough.
+    Lower threshold = more valid precinct numbers
 
-    params: dataset, validity_threshold
-    type: pd.DataFrame, float
-    rtype: pd.DataFrame
-    return: drug crime dataframe with modified borough name column
+    Parameters: 
+        dataset : pd.DataFrame
+        validity_threshold : float
+    Returns: 
+        pd.DataFrame drug crime dataframe with modified borough name column
     '''
+    assert isinstance(dataset, pd.DataFrame)
+    assert isinstance(validity_threshold, float)
     grouped_dataset = dataset.groupby('BORO_NM')
     
     precinct_map = {}
@@ -122,20 +135,18 @@ def clean_missing_boroughs(dataset, validity_threshold = 0.2):
         if target_precinct in precinct_map.keys():
             dataset.loc[target, 'BORO_NM'] = precinct_map[target_precinct]
 
-    # TODO: DROP REMAINING UNKNOWN
     dataset = dataset[dataset['BORO_NM'] != 'Borough not known']
 
     return dataset
 
 def preprocess_drug_crime(dataset):
     '''
-
     Takes in drug crime dataset and performs transformations such as renaming columns, dropping duplicates, cleaning missing values.
 
-        params: dataset
+        Parameters: dataset
         type: pd.DataFrame
         rtype: pd.DataFrame
-        return: modified drug crime data
+        Returns: modified drug crime data
 
 
     '''
@@ -216,16 +227,13 @@ def preprocess_drug_crime(dataset):
     return dataset
 
 def preprocess_census(datasets:dict):
-
-
     '''
-
     Preprocesses census data by renaming columns, and merging of columns.
 
-    params: dataset
+    Parameters: dataset
     type: pd.DataFrame
     rtype: pd.DataFrame
-    return: merged census data
+    Returns: merged census data
 
 
     ''' 
@@ -260,10 +268,10 @@ def preprocess_datasets(datasets):
     '''
     Calls both preprocess_drug_crime and preprocess_census
 
-    params: datasets
+    Parameters: datasets
     type: pd.DataFrame
     rtype: pd.DataFrame
-    return: modified drug_crime and census data
+    Returns: modified drug_crime and census data
     '''
     census_keys = ['All', 'Asian', 'Black', 'Hispanic', 'White']
     new_datasets = {}

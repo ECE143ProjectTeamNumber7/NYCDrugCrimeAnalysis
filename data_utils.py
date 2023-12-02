@@ -49,15 +49,15 @@ def count_time_part(time_col, times = {'hour': 0, 'minute': 0, 'second': 0}):
     Provides a count dict (similar to value_counts) of the provided individual relevant parts of the time column.
 
     Parameters:
-        time_col (pd.Series):   Column of datatime.time objects to parse through
+        time_col (pd.Series):   Column of `datatime.time` objects to parse through
         times (dict|list|int):  Optional. Dictonary, list, or integer containing the desired part of the time. 
                                 As a dict object, the start time can be set as well for the desired part of the time, i.e. `{'hour': 2}`. This is the equivalent to rotating the time set. Default is 0.
                                 
-                                Allowed input values are `['hour', 'minute', 'second']`
-                                Setting start time should wrap around, i.e. 60 -> 0, 24 -> 0
+                                Allowed input values are `['hour', 'minute', 'second']`.
+                                Setting start time should wrap around, i.e. 60 -> 0, 24 -> 0.
     
     Returns:
-        dict of dct of counts. Keys will match the desired part provided in `times`. 
+        dict of dct of counts. Keys will be the desired part provided in `times`. 
         Each item is a dictonary of every time value and their counts, with the first element being the start time set by times.
     '''
     assert isinstance(time_col, pd.Series)
